@@ -67,27 +67,86 @@
             <nav class="nav-theme nav-side">
                 <div class="custom-select-wrapper">
                     <select id="theme-switch" class="lang-selector">
-                        <option value="sombre" selected>Sombre</option>
-                        <option value="claire">Claire</option>
-                        <option value="mixte">Mixte</option>
-                        <option value="multicolore">Multicolore</option>
-                    </select>
-                </div>
-            </nav>
-        </div>
-
-        <!-- Section Slogan Isolée -->
-        <section class="slogan-section">
-            <span class="slogan">Just Kiff Tech !</span>
-        </section>
-
-        <!-- Le texte de présentation centré -->
-        <section class="hero-content">
-            <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
-            <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
-        </section>
+    <!-- L'en-tête géant avec la vidéo en fond (Taille réduite) -->
+    <header class="hero-section">
         
+        <video class="video-background" autoplay loop muted playsinline>
+            <source src="https://raw.githubusercontent.com/shemouelhai/keffstation/808d599fe4a2186cabe6f59bcc9b448a9c07bce0/Logo/gemini_generated_video_d174786e.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+
+        <!-- Conteneur central qui empile tout -->
+        <div class="header-elements">
+            
+            <!-- 1. Le Logo en haut -->
+            <div class="brand-container">
+                <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
+            </div>
+
+            <!-- 2. Le Slogan en dessous -->
+            <section class="slogan-section">
+                <span class="slogan">Just Kiff Tech !</span>
+            </section>
+
+            <!-- 3. Les Menus empilés verticalement -->
+            <div class="nav-stacked">
+                <nav class="nav-langue">
+                    <div class="custom-select-wrapper">
+                        <select id="lang-switch" class="lang-selector">
+                            <optgroup label="Langue par défaut">
+                                <option value="fr" data-currency="€" selected>🇫🇷 Français (EUR - €)</option>
+                            </optgroup>
+                            <optgroup label="Europe">
+                                <option value="en-gb" data-currency="£">🇬🇧 English (GBP - £)</option>
+                                <option value="es" data-currency="€">🇪🇸 Español (EUR - €)</option>
+                                <option value="de" data-currency="€">🇩🇪 Deutsch (EUR - €)</option>
+                                <option value="it" data-currency="€">🇮🇹 Italiano (EUR - €)</option>
+                                <option value="pt" data-currency="€">🇵🇹 Português (EUR - €)</option>
+                                <option value="ru" data-currency="₽">🇷🇺 Русский (RUB - ₽)</option>
+                            </optgroup>
+                            <optgroup label="Amériques">
+                                <option value="en-us" data-currency="$">🇺🇸 English (USD - $)</option>
+                                <option value="fr-ca" data-currency="CA$">🇨🇦 Français (CAD - CA$)</option>
+                                <option value="es-mx" data-currency="MX$">🇲🇽 Español (MXN - MX$)</option>
+                                <option value="pt-br" data-currency="R$">🇧🇷 Português (BRL - R$)</option>
+                            </optgroup>
+                            <optgroup label="Asie & Pacifique">
+                                <option value="zh" data-currency="¥">🇨🇳 中文 (CNY - ¥)</option>
+                                <option value="ja" data-currency="¥">🇯🇵 日本語 (JPY - ¥)</option>
+                                <option value="ko" data-currency="₩">🇰🇷 한국어 (KRW - ₩)</option>
+                                <option value="hi" data-currency="₹">🇮🇳 हिन्दी (INR - ₹)</option>
+                                <option value="en-au" data-currency="AU$">🇦🇺 English (AUD - AU$)</option>
+                            </optgroup>
+                            <optgroup label="Moyen-Orient & Afrique">
+                                <option value="he" data-currency="₪">🇮🇱 עברית (ILS - ₪)</option>
+                                <option value="ar" data-currency="﷼">🇸🇦 العربية (SAR - ﷼)</option>
+                                <option value="en-za" data-currency="ZAR">🇿🇦 English (ZAR)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </nav>
+
+                <nav class="nav-theme">
+                    <div class="custom-select-wrapper">
+                        <select id="theme-switch" class="lang-selector">
+                            <option value="sombre" selected>Sombre</option>
+                            <option value="claire">Claire</option>
+                            <option value="mixte">Mixte</option>
+                            <option value="multicolore">Multicolore</option>
+                        </select>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- 4. Le Texte d'intro -->
+            <section class="hero-content">
+                <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
+                <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
+            </section>
+            
+        </div>
     </header>
+
 
 
 
@@ -286,22 +345,92 @@
 
 .logo {
     height: 60px;
-    width: 60px;
-    background-color: black; /* Crée le cercle noir en fond */
-    padding: 6px; /* Ajoute de l'espace pour que le logo ne touche pas les bords */
-    object-fit: contain; /* S'assure que TOUT le logo est visible sans être coupé */
-    border-radius: 50%; /* Arrondit les bords pour faire un cercle parfait */
-    transform: scale(1.8);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--primary-color);
+<style>
+/* --- VARIABLES DE THÈMES (Activent les couleurs de fond et de texte) --- */
+:root { transition: background-color 0.3s ease, color 0.3s ease; }
+
+:root[data-theme="sombre"] {
+    --bg-color: #121212; --text-color: #e0e0e0; --primary-color: #bb86fc;
+    --secondary-bg: #1e1e1e; --border-color: #333333; --overlay-bg: rgba(0, 0, 0, 0.7);
 }
 
-/* --- LE SLOGAN --- */
-.slogan-section {
+:root[data-theme="claire"] {
+    --bg-color: #f5f5f5; --text-color: #1a1a1a; --primary-color: #0056b3;
+    --secondary-bg: #ffffff; --border-color: #dddddd; --overlay-bg: rgba(255, 255, 255, 0.75);
+}
+
+:root[data-theme="mixte"] {
+    --bg-color: #eceff1; --text-color: #263238; --primary-color: #ff9800;
+    --secondary-bg: #cfd8dc; --border-color: #b0bec5; --overlay-bg: rgba(236, 239, 241, 0.8);
+}
+
+:root[data-theme="multicolore"] {
+    --bg-color: #2b213a; --text-color: #00ffcc; --primary-color: #ff007f;
+    --secondary-bg: #3c2f54; --border-color: #00ffcc; --overlay-bg: rgba(43, 33, 58, 0.7);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+}
+
+/* --- LE HEADER AVEC VIDÉO (2 fois plus petite : 35vh) --- */
+.hero-section {
+    position: relative;
+    min-height: 35vh; /* Vidéo beaucoup moins haute */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.video-background {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* L'overlay s'adapte au thème pour que le texte reste lisible ! */
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--overlay-bg);
+    z-index: 2;
+    transition: background 0.3s ease;
+}
+
+/* --- STRUCTURE D'EMPILEMENT CENTRALE --- */
+.header-elements {
     position: relative;
     z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre tout horizontalement */
+    padding-top: 3rem;
+    gap: 30px; /* Espace entre les éléments */
+}
+
+/* --- LE LOGO (Arrondis simples, non déformé) --- */
+.brand-container {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+    border-radius: 15px; /* Bords arrondis mais pas tout ronds */
+    transform: scale(1.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* --- LE SLOGAN ARC-EN-CIEL --- */
+.slogan-section {
     text-align: center;
-    margin-top: 5rem;
+    margin-top: 15px;
 }
 
 .slogan {
@@ -316,7 +445,6 @@
     background-clip: text;
     color: transparent;
     animation: retrogradationGoogle 8s infinite linear;
-    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
 }
 
 @keyframes retrogradationGoogle {
@@ -324,25 +452,51 @@
     100% { background-position: 100% 50%; }
 }
 
-/* --- CONTENU DU HERO --- */
-.hero-content {
-    position: relative;
-    z-index: 3;
-    flex-grow: 1;
+/* --- LES MENUS EMPILÉS (Noir & Rouge) --- */
+.nav-stacked {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-    color: #ffffff;
-    max-width: 900px;
-    margin: 0 auto;
+    gap: 15px; /* Espace entre les deux menus */
+    width: 250px;
 }
 
-.hero-content h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-.hero-content p { font-size: 1.2rem; line-height: 1.6; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+.custom-select-wrapper {
+    width: 100%;
+}
+
+.lang-selector {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #000; /* Fond noir */
+    color: #FF3B30; /* Écriture Rouge */
+    border: 2px solid #FF3B30; /* Bordure rouge */
+    padding: 12px 15px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 12px; /* Carrés aux bords arrondis */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.lang-selector:hover {
+    box-shadow: 0 0 15px rgba(255, 59, 48, 0.6); /* Halo rouge */
+}
+
+/* --- TEXTE DE PRÉSENTATION (Dynamique avec le thème) --- */
+.hero-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+    color: var(--text-color); /* Change automatiquement avec le thème ! */
+}
+
+.hero-content h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+.hero-content p { font-size: 1.1rem; line-height: 1.6; }
 </style>
+
 
     <script>
         // Le dictionnaire de base (Ajoute d'autres langues ici au besoin)
