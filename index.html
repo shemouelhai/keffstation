@@ -20,11 +20,43 @@
         <div class="video-overlay"></div>
 
         <!-- La barre de navigation par-dessus la vidéo -->
+                <!-- La barre de navigation par-dessus la vidéo -->
         <div class="top-nav">
+            
+            <!-- Menu de gauche : Langue -->
+            <div class="nav-side">
+                <div class="custom-select-wrapper">
+                    <select id="lang-switch" class="lang-selector">
+                        <optgroup label="Langue par défaut">
+                            <option value="fr" selected>🇫🇷 Français</option>
+                        </optgroup>
+                        <optgroup label="Europe">
+                            <option value="en">🇬🇧 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Logo et Slogan au Centre -->
             <div class="brand-container">
                 <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
                 <span class="slogan">Just Kiff Tech !</span>
             </div>
+
+            <!-- Menu de droite : Thème -->
+            <div class="nav-side">
+                <select id="theme-switch" class="lang-selector">
+                    <option value="sombre" selected>Sombre</option>
+                    <option value="claire">Claire</option>
+                    <option value="mixte">Mixte</option>
+                    <option value="multicolore">Multicolore</option>
+                </select>
+            </div>
+            
+        </div>
+
 
             <nav>
                 <div class="custom-select-wrapper">
