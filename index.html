@@ -8,18 +8,19 @@
 </head>
 <body>
    
-       <header class="hero-section">
-          <!-- Vidéo en arrière-plan -->
+    <!-- L'en-tête géant avec la vidéo en fond -->
+    <header class="hero-section">
+        
+        <!-- Vidéo en arrière-plan -->
         <video class="video-background" autoplay loop muted playsinline>
             <source src="https://raw.githubusercontent.com/shemouelhai/keffstation/808d599fe4a2186cabe6f59bcc9b448a9c07bce0/Logo/gemini_generated_video_d174786e.mp4" type="video/mp4">
         </video>
         
-        <!-- Voile assombrissant pour bien lire le texte -->
+        <!-- Voile assombrissant -->
         <div class="video-overlay"></div>
 
-        <!-- La barre de navigation par-dessus la vidéo -->
+        <!-- La barre de navigation -->
         <div class="top-nav">
-            
             <!-- Menu de gauche : Langue et Devise -->
             <nav class="nav-langue nav-side">
                 <div class="custom-select-wrapper">
@@ -57,10 +58,9 @@
                 </div>
             </nav>
 
-            <!-- Logo et Slogan au Centre -->
+            <!-- Logo au Centre (Seul) -->
             <div class="brand-container">
                 <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
-                <span class="slogan">Just Kiff Tech !</span>
             </div>
 
             <!-- Menu de droite : Thème -->
@@ -74,10 +74,14 @@
                     </select>
                 </div>
             </nav>
-            
         </div>
 
-        <!-- Le texte de présentation centré sur la vidéo -->
+        <!-- Section Slogan Isolée -->
+        <section class="slogan-section">
+            <span class="slogan">Just Kiff Tech !</span>
+        </section>
+
+        <!-- Le texte de présentation centré -->
         <section class="hero-content">
             <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
             <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
@@ -86,7 +90,8 @@
     </header>
 
 
-    <main id="app">
+
+        <main id="app">
         <!-- Section Argumentaire Commercial -->
         <section class="punchline-usine">
             <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
@@ -129,6 +134,7 @@
             </div>
         </section>
     </main>
+
 
  1px solid rgba(255, 255, 255, 0.1);
     min-height: 150px; /* Assure que la barre englobe la taille du logo */
@@ -176,86 +182,28 @@
             </nav>
 
     
-/* Les conteneurs des menus sur les côtés */
-.nav-side {
-    z-index: 4;
-}
 
-/* Le conteneur du logo au centre absolu */
-.brand-container {
-    display: flex;
-    flex-direction: column; /* Place le slogan sous le logo */
-    align-items: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); /* Centre parfaitement l'élément */
-    top: 2rem;
-    gap: 70px; /* Écarte le slogan pour compenser le scale 4.5 du logo */
-}
-
-/* Le Logo à l'échelle 4.5 */
-.logo {
-    height: 50px; /* Taille de base */
-    width: auto;
-    border-radius: 8px;
-    transform: scale(4.5); /* Mise à l'échelle demandée */
-    transform-origin: top center; /* S'assure qu'il grandit vers le bas et les côtés */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Légère ombre pour le faire ressortir de la vidéo */
-}
-
-/* Le slogan avec l'animation Arc-en-Ciel Google */
-.slogan {
-    font-size: 1.5rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    
-    /* Le dégradé qui contient les 4 couleurs Google vives + l'arc-en-ciel */
-    background: linear-gradient(
-        90deg, 
-        #FF3B30, /* Rouge très vif */
-        #007AFF, /* Bleu très vif */
-        #FFCC00, /* Jaune très vif */
-        #34C759, /* Vert très vif */
-        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30 /* Arc-en-ciel final complet */
-    );
-    background-size: 400% 100%; /* Étire le dégradé pour l'animer */
-    
-    /* Applique la couleur uniquement sur le texte */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    
-<style>
+ <style>
 /* --- LE HEADER AVEC VIDÉO --- */
 .hero-section {
     position: relative;
-    min-height: 70vh; /* Prend 70% de la hauteur de l'écran */
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Coupe ce qui dépasse pour que la vidéo reste dans son cadre */
+    overflow: hidden;
 }
 
-/* La vidéo en plein écran dans le header */
 .video-background {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Permet à la vidéo de couvrir tout l'espace sans se déformer */
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
     z-index: 1;
 }
 
-/* Le filtre sombre par-dessus la vidéo */
 .video-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.65); /* Opacité à 65% */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.65);
     z-index: 2;
 }
 
@@ -265,194 +213,63 @@
     z-index: 3;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Aligné en haut pour laisser la place au logo géant */
+    align-items: flex-start;
     padding: 2rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    min-height: 150px; /* Assure que la barre englobe la taille du logo */
+    min-height: 100px;
 }
 
-/* Les conteneurs des menus sur les côtés */
 .nav-side {
     z-index: 4;
 }
 
-/* Le conteneur du logo au centre absolu */
+/* Le conteneur du logo */
 .brand-container {
-    display: flex;
-    flex-direction: column; /* Place le slogan sous le logo */
-    align-items: center;
     position: absolute;
     left: 50%;
-    transform: translateX(-50%); /* Centre parfaitement l'élément */
+    transform: translateX(-50%);
     top: 2rem;
-    gap: 70px; /* Écarte le slogan pour compenser le scale 4.5 du logo */
+    z-index: 5;
 }
 
-/* Le Logo à l'échelle 4.5 */
+/* Le Logo Rond à l'échelle 1.8 */
 .logo {
-    height: 50px; /* Taille de base */
-    width: auto;
-    border-radius: 8px;
-    transform: scale(4.5); /* Mise à l'échelle demandée */
-    transform-origin: top center; /* S'assure qu'il grandit vers le bas et les côtés */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Légère ombre pour le faire ressortir de la vidéo */
+    height: 60px; /* Taille de base légèrement augmentée pour faire un beau rond */
+    width: 60px;
+    object-fit: cover; /* Assure que l'image remplit bien le rond sans se déformer */
+    border-radius: 50%; /* Rend le logo parfaitement rond */
+    transform: scale(1.8); /* Mise à l'échelle 1.8 demandée */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--primary-color); /* Optionnel : petite bordure de la couleur du thème */
 }
 
-/* Le slogan avec l'animation Arc-en-Ciel Google */
-.slogan {
-    font-size: 1.5rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    
-    /* Le dégradé qui contient les 4 couleurs Google vives + l'arc-en-ciel */
-    background: linear-gradient(
-        90deg, 
-        #FF3B30, /* Rouge très vif */
-        #007AFF, /* Bleu très vif */
-        #FFCC00, /* Jaune très vif */
-        #34C759, /* Vert très vif */
-        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30 /* Arc-en-ciel final complet */
-    );
-    background-size: 400% 100%; /* Étire le dégradé pour l'animer */
-    
-    /* Applique la couleur uniquement sur le texte */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    
-    /* L'animation qui boucle à l'infini */
-    animation: retrogradationGoogle 8s infinite linear;
-    
-    /* Ombre portée autour du texte pour qu'il soit lisible sur la vidéo */
-    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
-}
-
-/* L'animation du dégradé qui glisse en arrière-plan */
-@keyframes retrogradationGoogle {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-}
-
-/* Le bloc de texte centré sur la vidéo */
-.hero-content {
-    position: relative;
-    z-index: 3; /* Passe au-dessus de la vidéo */
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-    color: #ffffff; /* On force le texte en blanc pour contraster avec la vidéo sombre */
-    max-width: 900px;
-    margin: 0 auto;
-}
-<style>
-/* --- LE HEADER AVEC VIDÉO --- */
-.hero-section {
-    position: relative;
-    min-height: 70vh; /* Prend 70% de la hauteur de l'écran */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Coupe ce qui dépasse pour que la vidéo reste dans son cadre */
-}
-
-/* La vidéo en plein écran dans le header */
-.video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Permet à la vidéo de couvrir tout l'espace sans se déformer */
-    z-index: 1;
-}
-
-/* Le filtre sombre par-dessus la vidéo */
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.65); /* Opacité à 65% */
-    z-index: 2;
-}
-
-/* --- LA BARRE DE NAVIGATION MODIFIÉE --- */
-.top-nav {
+/* La section dédiée au slogan */
+.slogan-section {
     position: relative;
     z-index: 3;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* Aligné en haut pour laisser la place au logo géant */
-    padding: 2rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    min-height: 150px; /* Assure que la barre englobe la taille du logo */
-}
-
-/* Les conteneurs des menus sur les côtés */
-.nav-side {
-    z-index: 4;
-}
-
-/* Le conteneur du logo au centre absolu */
-.brand-container {
-    display: flex;
-    flex-direction: column; /* Place le slogan sous le logo */
-    align-items: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); /* Centre parfaitement l'élément */
-    top: 2rem;
-    gap: 70px; /* Écarte le slogan pour compenser le scale 4.5 du logo */
-}
-
-/* Le Logo à l'échelle 4.5 */
-.logo {
-    height: 50px; /* Taille de base */
-    width: auto;
-    border-radius: 8px;
-    transform: scale(4.5); /* Mise à l'échelle demandée */
-    transform-origin: top center; /* S'assure qu'il grandit vers le bas et les côtés */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Légère ombre pour le faire ressortir de la vidéo */
+    text-align: center;
+    margin-top: 5rem; /* Pousse le slogan sous le logo */
 }
 
 /* Le slogan avec l'animation Arc-en-Ciel Google */
 .slogan {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 900;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    
-    /* Le dégradé qui contient les 4 couleurs Google vives + l'arc-en-ciel */
     background: linear-gradient(
         90deg, 
-        #FF3B30, /* Rouge très vif */
-        #007AFF, /* Bleu très vif */
-        #FFCC00, /* Jaune très vif */
-        #34C759, /* Vert très vif */
-        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30 /* Arc-en-ciel final complet */
+        #FF3B30, #007AFF, #FFCC00, #34C759, 
+        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30
     );
-    background-size: 400% 100%; /* Étire le dégradé pour l'animer */
-    
-    /* Applique la couleur uniquement sur le texte */
+    background-size: 400% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
-    
-    /* L'animation qui boucle à l'infini */
     animation: retrogradationGoogle 8s infinite linear;
-    
-    /* Ombre portée autour du texte pour qu'il soit lisible sur la vidéo */
     filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
 }
 
-/* L'animation du dégradé qui glisse en arrière-plan */
 @keyframes retrogradationGoogle {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
@@ -461,7 +278,7 @@
 /* Le bloc de texte centré sur la vidéo */
 .hero-content {
     position: relative;
-    z-index: 3; /* Passe au-dessus de la vidéo */
+    z-index: 3;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -469,7 +286,7 @@
     align-items: center;
     text-align: center;
     padding: 2rem;
-    color: #ffffff; /* On force le texte en blanc pour contraster avec la vidéo sombre */
+    color: #ffffff;
     max-width: 900px;
     margin: 0 auto;
 }
@@ -477,7 +294,7 @@
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Ombre portée pour détacher le texte */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .hero-content p {
@@ -486,6 +303,8 @@
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 </style>
+
+
 
 
 
