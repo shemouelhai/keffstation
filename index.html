@@ -288,7 +288,7 @@ button:hover { filter: brightness(1.2); }
     </main>
 
     <script>
-        // Le dictionnaire de base
+        // Le dictionnaire de base enrichi avec plus de langues
         const traductions = {
             fr: {
                 titre_accueil: "La valeur est à la source.",
@@ -297,17 +297,38 @@ button:hover { filter: brightness(1.2); }
             en: {
                 titre_accueil: "Value starts at the source.",
                 description: "Why pay middlemen? Our products come directly from the factory with <strong>less than 10% commission</strong>. Avoid malls and enjoy professional, regular, and seamless shipping."
+            },
+            es: {
+                titre_accueil: "El valor está en la fuente.",
+                description: "¿Por qué pagar a intermediarios? Nuestros productos provienen directamente de fábrica con <strong>menos del 10% de comisión</strong>. Evita los centros comerciales y disfruta de un envío profesional, regular y sin problemas."
+            },
+            de: {
+                titre_accueil: "Der Wert liegt an der Quelle.",
+                description: "Warum Zwischenhändler bezahlen? Unsere Produkte kommen direkt ab Werk mit <strong>weniger als 10% Provision</strong>. Vermeiden Sie Einkaufszentren und genießen Sie professionellen, regelmäßigen und reibungslosen Versand."
+            },
+            it: {
+                titre_accueil: "Il valore è alla fonte.",
+                description: "Perché pagare gli intermediari? I nostri prodotti provengono direttamente dalla fabbrica con <strong>meno del 10% di commissione</strong>. Evita i centri commerciali e goditi una spedizione professionale, regolare e senza intoppi."
+            },
+            pt: {
+                titre_accueil: "O valor está na fonte.",
+                description: "Por que pagar intermediários? Nossos produtos vêm diretamente da fábrica com <strong>menos de 10% de comissão</strong>. Evite shoppings e desfrute de um envio profissional, regular e sem problemas."
             }
+            // Tu peux rajouter les autres langues (zh, ru, he, ar) sur le même modèle !
         };
 
         // La fonction de traduction
         function appliquerTraduction(langueComplete) {
+            // On coupe la langue (ex: "en-gb" devient "en")
             const langueBase = langueComplete.split('-')[0]; 
+            
             document.documentElement.lang = langueBase;
             const elements = document.querySelectorAll('[data-i18n]');
             
             elements.forEach(el => {
                 const cle = el.getAttribute('data-i18n');
+                
+                // Si la traduction existe dans notre dictionnaire, on l'applique
                 if (traductions[langueBase] && traductions[langueBase][cle]) {
                     el.innerHTML = traductions[langueBase][cle];
                 }
@@ -326,6 +347,15 @@ button:hover { filter: brightness(1.2); }
                     appliquerTraduction(langueChoisie);
                 });
             }
+
+            const menuTheme = document.getElementById("theme-switch");
+            if(menuTheme) {
+                menuTheme.addEventListener("change", (e) => {
+                    document.documentElement.setAttribute('data-theme', e.target.value);
+                });
+            }
+        });
+    </script>
 
             const menuTheme = document.getElementById("theme-switch");
             if(menuTheme) {
