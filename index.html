@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="sombre"> <!-- Français et thème sombre par défaut -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeffStation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav><!-- Sélecteur de langue international -->
+<div class="custom-select-wrapper">
+    <select id="lang-switch" class="lang-selector">
+        <optgroup label="Langue par défaut">
+            <option value="fr" selected>🇫🇷 Français</option>
+        </optgroup>
+        <optgroup label="Europe">
+            <option value="en">🇬🇧 English</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="pt">🇵🇹 Português</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="nl">🇳🇱 Nederlands</option>
+            <option value="pl">🇵🇱 Polski</option>
+        </optgroup>
+        <optgroup label="Asie & Pacifique">
+            <option value="zh">🇨🇳 中文 (Chinois)</option>
+            <option value="ja">🇯🇵 日本語 (Japonais)</option>
+            <option value="ko">🇰🇷 한국어 (Coréen)</option>
+            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+        </optgroup>
+        <optgroup label="Moyen-Orient & Afrique">
+            <option value="ar">🇸🇦 العربية (Arabe)</option>
+            <option value="tr">🇹🇷 Türkçe</option>
+            <option value="he">🇮🇱 עברית (Hébreu)</option>
+        </optgroup>
+    </select>
+</div>
+       <option value="fr" selected>Français</option>
+                <option value="en">English</option>
+            </select>
+            
+            <!-- Sélecteur de thème -->
+            <select id="theme-switch">
+                <option value="sombre" selected>Sombre</option>
+                <option value="claire">Claire</option>
+                <option value="mixte">Mixte</option>
+                <option value="multicolore">Multicolore</option>
+            </select>
+        </nav>
+    </header>
+
+    <!-- Contenu dynamique de la SPA -->
+    <main id="app">
+        <h1 data-i18n="titre_accueil">Chargement...</h1>
+        <p data-i18n="description">Chargement...</p>
+        <button data-i18n="bouton_boutique">Boutique</button>
+    </main>
+
+    <script src="app.js"></script>
+
+/* --- VARIABLES DE BASE (Transitions fluides) --- */
+:root {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 1. THÈME SOMBRE (Par défaut) */
+:root[data-theme="sombre"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #bb86fc;
+    --secondary-bg: #1e1e1e;
+    --border-color: #333333;
+}
+
+/* 2. THÈME CLAIRE */
+:root[data-theme="claire"] {
+    --bg-color: #f5f5f5;
+    --text-color: #1a1a1a;
+    --primary-color: #0056b3;
+    --secondary-bg: #ffffff;
+    --border-color: #dddddd;
+}
+
+/* 3. THÈME MIXTE (Ex: Header sombre, fond clair) */
+:root[data-theme="mixte"] {
+    --bg-color: #eceff1;
+    --text-color: #263238;
+    --primary-color: #ff9800;
+    --secondary-bg: #263238; /* Utilisé pour des cartes ou headers inversés */
+    --border-color: #b0bec5;
+}
+
+/* 4. THÈME MULTICOLORE (Vaporwave / Cyberpunk vibe) */
+:root[data-theme="multicolore"] {
+    --bg-color: #2b213a;
+    --text-color: #00ffcc;
+    --primary-color: #ff007f;
+    --secondary-bg: linear-gradient(135deg, #ff007f, #7400b8);
+    --border-color: #00ffcc;
+}
+
+/* --- APPLICATION DES VARIABLES --- */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: var(--secondary-bg);
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+
+// --- 1. DICTIONNAIRE DE TRADUCTION ---
+// Le français est la base, on ajoute les autres langues selon les besoins
+const traductions = {
+    fr: {
+        titre_accueil: "Bienvenue sur KeffStation",
+        description: "La plateforme multiservices pour les professionnels : Boutique, Services, et Réseau Social.",
+        bouton_boutique: "Accéder à la Boutique électronique",
+        erreur_404: "Page introuvable."
+    },
+    en: {
+        titre_accueil: "Welcome to KeffStation",
+        description: "The multi-service platform for professionals: Shop, Services, and Social Network.",
+        bouton_boutique: "Access the Electronic Store",
+        erreur_404: "Page not found."
+    }
+};
+
+// Langue par défaut
+let langueActuelle = 'fr';
+
+// --- 2. FONCTION DE TRADUCTION DE LA SPA ---
+function appliquerTraduction(langue) {
+    langueActuelle = langue;
+    document.documentElement.lang = langue; // Met à jour l'attribut lang du HTML
+    
+    // Sélectionne tous les éléments avec l'attribut data-i18n
+    const elements = document.querySelectorAll('[data-i18n]');
+    
+    elements.forEach(el => {
+        const cle = el.getAttribute('data-i18n');
+        if (traductions[langue] && traductions[langue][cle]) {
+            el.textContent = traductions[langue][cle];
+        }
+    });
+}
+
+// --- 3. GESTIONNAIRES D'ÉVÉNEMENTS (Listeners) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // Initialisation
+    appliquerTraduction(langueActuelle);
+
+    // Écouteur pour le changement de langue
+    const langSwitch = document.getElementById("lang-switch");
+    langSwitch.addEventListener("change", (e) => {
+        appliquerTraduction(e.target.value);
+    });
+
+    // Écouteur pour le changement de thème
+    const themeSwitch = document.getElementById("theme-switch");
+    themeSwitch.addEventListener("change", (e) => {
+        const themeChoisi = e.target.value;
+        document.documentElement.setAttribute('data-theme', themeChoisi);
+    });
+});
+
+// --- 4. LOGIQUE DE ROUTING SPA (Exemple basique) ---
+// Ici on simulerait le changement de "page" sans recharger
+function naviguerVers(route) {
+    const app = document.getElementById("app");
+    // Logique pour vider '#app' et injecter le nouveau contenu
+    // Puis rappeler appliquerTraduction(langueActuelle) sur le nouveau contenu
+    console.log(`Navigation vers : ${route}`);
+}
+
+</body>
+</html>
