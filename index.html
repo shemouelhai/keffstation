@@ -210,10 +210,106 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     background: linear-gradient(
-        90deg, 
-        #FF3B30, #007AFF, #FFCC00, #34C759, 
-        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30
-    );
+<style>
+/* --- LE HEADER AVEC VIDÉO --- */
+.hero-section {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.video-background {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 2;
+}
+
+/* --- LA BARRE DE NAVIGATION (CENTRÉE) --- */
+.top-nav {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center; /* Centre les menus horizontalement */
+    align-items: flex-start;
+    gap: 250px; /* Laisse un grand espace au centre pour ne pas cacher le logo géant */
+    padding: 2rem 2rem;
+    min-height: 100px;
+}
+
+.nav-side {
+    z-index: 4;
+}
+
+/* --- DESIGN DES MENUS (Carrés arrondis, Noir et Rouge) --- */
+.custom-select-wrapper {
+    position: relative;
+}
+
+.lang-selector {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: black; /* Fond noir */
+    color: red; /* Écriture rouge */
+    border: 2px solid red; /* Bordure rouge pour bien délimiter */
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px; /* Boutons carrés mais bien arrondis */
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+}
+
+.lang-selector:hover {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* Effet néon rouge au survol */
+}
+
+/* --- LE LOGO GÉANT (Dans son cercle noir) --- */
+.brand-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2rem;
+    z-index: 5;
+}
+
+.logo {
+    height: 60px;
+    width: 60px;
+    background-color: black; /* Crée le cercle noir en fond */
+    padding: 6px; /* Ajoute de l'espace pour que le logo ne touche pas les bords */
+    object-fit: contain; /* S'assure que TOUT le logo est visible sans être coupé */
+    border-radius: 50%; /* Arrondit les bords pour faire un cercle parfait */
+    transform: scale(1.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--primary-color);
+}
+
+/* --- LE SLOGAN --- */
+.slogan-section {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.slogan {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #FF3B30, #007AFF, #FFCC00, #34C759, #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30);
     background-size: 400% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -228,7 +324,7 @@
     100% { background-position: 100% 50%; }
 }
 
-/* Le bloc de texte centré sur la vidéo */
+/* --- CONTENU DU HERO --- */
 .hero-content {
     position: relative;
     z-index: 3;
@@ -244,25 +340,12 @@
     margin: 0 auto;
 }
 
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
+.hero-content h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.hero-content p { font-size: 1.2rem; line-height: 1.6; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
 </style>
 
-
-
-
-
     <script>
-        // Le dictionnaire de base
+        // Le dictionnaire de base (Ajoute d'autres langues ici au besoin)
         const traductions = {
             fr: {
                 titre_accueil: "La valeur est à la source.",
@@ -274,40 +357,41 @@
             }
         };
 
-        // La fonction qui change le texte
-        function appliquerTraduction(langue) {
-            document.documentElement.lang = langue;
+        // La fonction qui change le texte corrigée
+        function appliquerTraduction(langueComplete) {
+            // On coupe la langue (ex: "en-gb" devient "en") pour trouver la bonne clé dans le dictionnaire
+            const langueBase = langueComplete.split('-')[0]; 
+            
+            document.documentElement.lang = langueBase;
             const elements = document.querySelectorAll('[data-i18n]');
             
             elements.forEach(el => {
                 const cle = el.getAttribute('data-i18n');
-                if (traductions[langue] && traductions[langue][cle]) {
-                    el.innerHTML = traductions[langue][cle];
+                
+                // Si la traduction existe pour cette langue de base, on l'applique
+                if (traductions[langueBase] && traductions[langueBase][cle]) {
+                    el.innerHTML = traductions[langueBase][cle];
                 }
             });
         }
 
-        // Les écouteurs pour tes deux menus distincts
+        // Les écouteurs
         document.addEventListener("DOMContentLoaded", () => {
             
-                        // Écouteur pour le menu Langue ET Devise
+            // Écouteur pour le menu Langue ET Devise
             const menuLangue = document.getElementById("lang-switch");
             if(menuLangue) {
                 menuLangue.addEventListener("change", (e) => {
                     const langueChoisie = e.target.value;
-                    
-                    // On récupère l'option que l'utilisateur vient de cliquer
                     const optionSelectionnee = e.target.options[e.target.selectedIndex];
-                    // On extrait la devise associée (ex: "€", "$", "₪")
                     const deviseChoisie = optionSelectionnee.getAttribute("data-currency");
                     
-                    // Tu pourras utiliser 'deviseChoisie' ici pour actualiser les prix des produits
-                    console.log("Langue activée :", langueChoisie, "| Devise activée :", deviseChoisie);
+                    console.log("Langue complète activée :", langueChoisie, "| Devise activée :", deviseChoisie);
                     
+                    // Appelle la traduction
                     appliquerTraduction(langueChoisie);
                 });
             }
-
 
             // Écouteur pour le menu Thème
             const menuTheme = document.getElementById("theme-switch");
