@@ -143,6 +143,20 @@ body {
 .lang-selector:hover {
     box-shadow: 0 0 15px rgba(255, 59, 48, 0.6);
 }
+/* --- TRANSITION DES TRADUCTIONS ET SUPPORT RTL --- */
+[data-i18n] {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
+
+/* Aligne le texte à droite quand la langue est Hébreu ou Arabe */
+[dir="rtl"] .hero-content {
+    direction: rtl;
+}
 
 /* --- TEXTE DE PRÉSENTATION --- */
 .hero-content {
@@ -288,7 +302,7 @@ button:hover { filter: brightness(1.2); }
     </main>
 
     <script>
-        // Le dictionnaire de base enrichi avec plus de langues
+        // Le dictionnaire complet avec les caractères non-latins
         const traductions = {
             fr: {
                 titre_accueil: "La valeur est à la source.",
@@ -304,34 +318,72 @@ button:hover { filter: brightness(1.2); }
             },
             de: {
                 titre_accueil: "Der Wert liegt an der Quelle.",
-                description: "Warum Zwischenhändler bezahlen? Unsere Produkte kommen direkt ab Werk mit <strong>weniger als 10% Provision</strong>. Vermeiden Sie Einkaufszentren und genießen Sie professionellen, regelmäßigen und reibungslosen Versand."
+                description: "Warum Zwischenhändler bezahlen? Unsere Produkte kommen direkt ab Werk mit <strong>weniger als 10% Provision</strong>. Vermeiden Sie Einkaufszentren und genießen Sie professionellen Versand."
             },
             it: {
                 titre_accueil: "Il valore è alla fonte.",
-                description: "Perché pagare gli intermediari? I nostri prodotti provengono direttamente dalla fabbrica con <strong>meno del 10% di commissione</strong>. Evita i centri commerciali e goditi una spedizione professionale, regolare e senza intoppi."
+                description: "Perché pagare gli intermediari? I nostri prodotti provengono direttamente dalla fabbrica con <strong>meno del 10% di commissione</strong>."
             },
             pt: {
                 titre_accueil: "O valor está na fonte.",
-                description: "Por que pagar intermediários? Nossos produtos vêm diretamente da fábrica com <strong>menos de 10% de comissão</strong>. Evite shoppings e desfrute de um envio profissional, regular e sem problemas."
+                description: "Por que pagar intermediários? Nossos produtos vêm diretamente da fábrica com <strong>menos de 10% de comissão</strong>."
+            },
+            ru: {
+                titre_accueil: "Ценность у истоков.",
+                description: "Зачем платить посредникам? Наши товары поступают напрямую с завода с <strong>комиссией менее 10%</strong>. Избегайте торговых центров и наслаждайтесь профессиональной доставкой."
+            },
+            zh: {
+                titre_accueil: "价值源于源头。",
+                description: "为什么要向中间商付款？我们的产品直接来自工厂，<strong>佣金低于10%</strong>。避开购物中心，享受专业、定期的无缝运输。"
+            },
+            ja: {
+                titre_accueil: "価値は源泉にあり。",
+                description: "なぜ仲介業者に支払うのですか？当社の製品は工場から直接届き、<strong>手数料は10％未満</strong>です。ショッピングモールを避けて、プロの配送をお楽しみください。"
+            },
+            ko: {
+                titre_accueil: "가치는 원천에 있습니다.",
+                description: "왜 중개인에게 돈을 지불합니까? 당사의 제품은 <strong>10% 미만의 수수료</strong>로 공장에서 직접 제공됩니다. 쇼핑몰을 피하고 전문적인 배송을 즐기십시오."
+            },
+            hi: {
+                titre_accueil: "मूल्य स्रोत पर है।",
+                description: "बिचौलियों को भुगतान क्यों करें? हमारे उत्पाद सीधे कारखाने से <strong>10% से कम कमीशन</strong> के साथ आते हैं। मॉल से बचें और पेशेवर शिपिंग का आनंद लें।"
+            },
+            he: {
+                titre_accueil: "הערך נמצא במקור.",
+                description: "למה לשלם למתווכים? המוצרים שלנו מגיעים ישירות מהמפעל עם <strong>פחות מ-10% עמלה</strong>. הימנעו מקניונים ותיהנו ממשלוח מקצועי, סדיר וחלק."
+            },
+            ar: {
+                titre_accueil: "القيمة في المصدر.",
+                description: "لماذا تدفع للوسطاء؟ منتجاتنا تأتي مباشرة من المصنع بـ <strong>عمولة أقل من 10%</strong>. تجنب المراكز التجارية واستمتع بشحن احترافي وسلس."
             }
-            // Tu peux rajouter les autres langues (zh, ru, he, ar) sur le même modèle !
         };
 
-        // La fonction de traduction
+        // La fonction de traduction avec Transition
         function appliquerTraduction(langueComplete) {
-            // On coupe la langue (ex: "en-gb" devient "en")
             const langueBase = langueComplete.split('-')[0]; 
-            
             document.documentElement.lang = langueBase;
+            
+            // Gérer le sens de lecture (RTL pour Hébreu et Arabe)
+            if (langueBase === 'he' || langueBase === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+
             const elements = document.querySelectorAll('[data-i18n]');
             
             elements.forEach(el => {
-                const cle = el.getAttribute('data-i18n');
+                // 1. On cache le texte en fondu
+                el.classList.add('fade-out');
                 
-                // Si la traduction existe dans notre dictionnaire, on l'applique
-                if (traductions[langueBase] && traductions[langueBase][cle]) {
-                    el.innerHTML = traductions[langueBase][cle];
-                }
+                // 2. On attend 300ms (le temps de l'animation CSS), on traduit, et on réaffiche
+                setTimeout(() => {
+                    const cle = el.getAttribute('data-i18n');
+                    if (traductions[langueBase] && traductions[langueBase][cle]) {
+                        el.innerHTML = traductions[langueBase][cle];
+                    }
+                    el.classList.remove('fade-out');
+                }, 300);
             });
         }
 
@@ -344,6 +396,8 @@ button:hover { filter: brightness(1.2); }
                     const optionSelectionnee = e.target.options[e.target.selectedIndex];
                     const deviseChoisie = optionSelectionnee.getAttribute("data-currency");
                     console.log("Langue complète activée :", langueChoisie, "| Devise activée :", deviseChoisie);
+                    
+                    // Lance l'animation de traduction
                     appliquerTraduction(langueChoisie);
                 });
             }
@@ -357,13 +411,5 @@ button:hover { filter: brightness(1.2); }
         });
     </script>
 
-            const menuTheme = document.getElementById("theme-switch");
-            if(menuTheme) {
-                menuTheme.addEventListener("change", (e) => {
-                    document.documentElement.setAttribute('data-theme', e.target.value);
-                });
-            }
-        });
-    </script>
 </body>
 </html>
