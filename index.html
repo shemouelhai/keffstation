@@ -130,59 +130,7 @@
         </section>
     </main>
 
-<style>
-
-/* --- LE HEADER AVEC VIDÉO --- */
-.hero-section {
-    position: relative;
-    min-height: 70vh; /* Prend 70% de la hauteur de l'écran */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Coupe ce qui dépasse pour que la vidéo reste dans son cadre */
-}
-
-/* La vidéo en plein écran dans le header */
-.video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Permet à la vidéo de couvrir tout l'espace sans se déformer */
-    z-index: 1;
-}
-
-/* Le filtre sombre par-dessus la vidéo */
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.65); /* Opacité à 65% */
-    z-index: 2;
-}
-
-/* La barre de menu posée sur la vidéo */
-.top-nav {
-    position: relative;
-    z-index: 3; /* Obligatoire pour passer au-dessus de la vidéo et de l'overlay */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* --- LA BARRE DE NAVIGATION MODIFIÉE --- */
-.top-nav {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* Aligné en haut pour laisser la place au logo géant */
-    padding: 2rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+ 1px solid rgba(255, 255, 255, 0.1);
     min-height: 150px; /* Assure que la barre englobe la taille du logo */
 }
 
@@ -402,6 +350,129 @@
     max-width: 900px;
     margin: 0 auto;
 }
+<style>
+/* --- LE HEADER AVEC VIDÉO --- */
+.hero-section {
+    position: relative;
+    min-height: 70vh; /* Prend 70% de la hauteur de l'écran */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Coupe ce qui dépasse pour que la vidéo reste dans son cadre */
+}
+
+/* La vidéo en plein écran dans le header */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Permet à la vidéo de couvrir tout l'espace sans se déformer */
+    z-index: 1;
+}
+
+/* Le filtre sombre par-dessus la vidéo */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65); /* Opacité à 65% */
+    z-index: 2;
+}
+
+/* --- LA BARRE DE NAVIGATION MODIFIÉE --- */
+.top-nav {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligné en haut pour laisser la place au logo géant */
+    padding: 2rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 150px; /* Assure que la barre englobe la taille du logo */
+}
+
+/* Les conteneurs des menus sur les côtés */
+.nav-side {
+    z-index: 4;
+}
+
+/* Le conteneur du logo au centre absolu */
+.brand-container {
+    display: flex;
+    flex-direction: column; /* Place le slogan sous le logo */
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centre parfaitement l'élément */
+    top: 2rem;
+    gap: 70px; /* Écarte le slogan pour compenser le scale 4.5 du logo */
+}
+
+/* Le Logo à l'échelle 4.5 */
+.logo {
+    height: 50px; /* Taille de base */
+    width: auto;
+    border-radius: 8px;
+    transform: scale(4.5); /* Mise à l'échelle demandée */
+    transform-origin: top center; /* S'assure qu'il grandit vers le bas et les côtés */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Légère ombre pour le faire ressortir de la vidéo */
+}
+
+/* Le slogan avec l'animation Arc-en-Ciel Google */
+.slogan {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+    /* Le dégradé qui contient les 4 couleurs Google vives + l'arc-en-ciel */
+    background: linear-gradient(
+        90deg, 
+        #FF3B30, /* Rouge très vif */
+        #007AFF, /* Bleu très vif */
+        #FFCC00, /* Jaune très vif */
+        #34C759, /* Vert très vif */
+        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30 /* Arc-en-ciel final complet */
+    );
+    background-size: 400% 100%; /* Étire le dégradé pour l'animer */
+    
+    /* Applique la couleur uniquement sur le texte */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    
+    /* L'animation qui boucle à l'infini */
+    animation: retrogradationGoogle 8s infinite linear;
+    
+    /* Ombre portée autour du texte pour qu'il soit lisible sur la vidéo */
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
+}
+
+/* L'animation du dégradé qui glisse en arrière-plan */
+@keyframes retrogradationGoogle {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* Le bloc de texte centré sur la vidéo */
+.hero-content {
+    position: relative;
+    z-index: 3; /* Passe au-dessus de la vidéo */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    color: #ffffff; /* On force le texte en blanc pour contraster avec la vidéo sombre */
+    max-width: 900px;
+    margin: 0 auto;
+}
 
 .hero-content h1 {
     font-size: 3rem;
@@ -415,6 +486,7 @@
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 </style>
+
 
 
     <script>
