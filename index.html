@@ -8,6 +8,224 @@
 </head>
 <body>
     <header>
+        
+        <div class="brand-container">
+            <!-- Utilisation du lien 'raw' pour que l'image s'affiche -->
+            <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
+            <span class="slogan">Just Kiff Tech !</span>
+        </div>
+
+        <nav>
+            <div class="custom-select-wrapper">
+                <select id="lang-switch" class="lang-selector">
+                    <option value="fr" selected>🇫🇷 Français</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+            </div>
+            <select id="theme-switch" class="lang-selector">
+                <option value="sombre" selected>Sombre</option>
+                <option value="claire">Claire</option>
+                <option value="mixte">Mixte</option>
+                <option value="multicolore">Multicolore</option>
+            </select>
+        </nav>
+
+        /* --- HEADER & LOGO --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--secondary-bg);
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 50px; /* Ajuste la taille selon tes besoins */
+    width: auto;
+    border-radius: 8px; /* Si tu veux adoucir les bords */
+}
+
+.slogan {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- SECTIONS COMMERCIALES --- */
+.punchline-usine {
+    text-align: center;
+    padding: 3rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.punchline-usine h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.punchline-usine p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* --- CARTES D'ABONNEMENT --- */
+.pricing-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+
+.card.premium {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
+}
+
+.prix {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: var(--primary-color);
+}
+
+.prix span {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.badge-promo {
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.card ul li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.btn-souscrire {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+}
+
+/* --- INFO LIVRAISON --- */
+.livraison-info {
+    text-align: center;
+    padding: 2rem;
+    background: var(--secondary-bg);
+    margin-top: 2rem;
+}
+
+.options-livraison {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.option {
+    background: var(--bg-color);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.text-muted {
+    opacity: 0.6;
+}
+
+    </header>
+
+    <main id="app">
+        <!-- Section Argumentaire Commercial -->
+        <section class="punchline-usine">
+            <h1>La valeur est à la source.</h1>
+            <p>Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
+        </section>
+
+        <!-- Section Abonnements VIP -->
+        <section class="pricing-cards">
+            <div class="card">
+                <h3>Abonnement Mensuel</h3>
+                <div class="prix">5€ <span>/ mois</span></div>
+                <div class="badge-promo">-13% sur inscription</div>
+                <ul>
+                    <li>Accès catalogue usine</li>
+                    <li>Support prioritaire</li>
+                </ul>
+                <button class="btn-souscrire">Souscrire</button>
+            </div>
+
+            <div class="card premium">
+                <h3>Abonnement Annuel</h3>
+                <div class="prix">70€ <span>/ an</span></div>
+                <div class="badge-promo">-17% sur votre caisse totale toute l'année</div>
+                <ul>
+                    <li>Avantage maximum</li>
+                    <li>Livraison Express privilégiée</li>
+                </ul>
+                <button class="btn-souscrire">Souscrire</button>
+            </div>
+        </section>
+
+        <!-- Section Livraison -->
+        <section class="livraison-info">
+            <h2>Expédition & Réception</h2>
+            <p>Validation par caisse de produits. Choisissez votre méthode de livraison :</p>
+            <div class="options-livraison">
+                <div class="option">📦 <strong>Basic :</strong> Standard, selon poids et volume.</div>
+                <div class="option">🚀 <strong>Express :</strong> Réception rapide, traitement prioritaire.</div>
+                <div class="option text-muted">🔧 <em>Option d'installation (Bientôt disponible)</em></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+
+        
         <nav><!-- Sélecteur de langue international -->
 <div class="custom-select-wrapper">
     <select id="lang-switch" class="lang-selector">
