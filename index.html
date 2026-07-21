@@ -8,10 +8,8 @@
 </head>
 <body>
    
-    <!-- L'en-tête géant avec la vidéo en fond -->
-    <header class="hero-section">
-        
-        <!-- Vidéo en arrière-plan -->
+       <header class="hero-section">
+          <!-- Vidéo en arrière-plan -->
         <video class="video-background" autoplay loop muted playsinline>
             <source src="https://raw.githubusercontent.com/shemouelhai/keffstation/808d599fe4a2186cabe6f59bcc9b448a9c07bce0/Logo/gemini_generated_video_d174786e.mp4" type="video/mp4">
         </video>
@@ -20,24 +18,44 @@
         <div class="video-overlay"></div>
 
         <!-- La barre de navigation par-dessus la vidéo -->
-                <!-- La barre de navigation par-dessus la vidéo -->
         <div class="top-nav">
             
-            <!-- Menu de gauche : Langue -->
-            <div class="nav-side">
+            <!-- Menu de gauche : Langue et Devise -->
+            <nav class="nav-langue nav-side">
                 <div class="custom-select-wrapper">
                     <select id="lang-switch" class="lang-selector">
                         <optgroup label="Langue par défaut">
-                            <option value="fr" selected>🇫🇷 Français</option>
+                            <option value="fr" data-currency="€" selected>🇫🇷 Français (EUR - €)</option>
                         </optgroup>
                         <optgroup label="Europe">
-                            <option value="en">🇬🇧 English</option>
-                            <option value="es">🇪🇸 Español</option>
-                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="en-gb" data-currency="£">🇬🇧 English (GBP - £)</option>
+                            <option value="es" data-currency="€">🇪🇸 Español (EUR - €)</option>
+                            <option value="de" data-currency="€">🇩🇪 Deutsch (EUR - €)</option>
+                            <option value="it" data-currency="€">🇮🇹 Italiano (EUR - €)</option>
+                            <option value="pt" data-currency="€">🇵🇹 Português (EUR - €)</option>
+                            <option value="ru" data-currency="₽">🇷🇺 Русский (RUB - ₽)</option>
+                        </optgroup>
+                        <optgroup label="Amériques">
+                            <option value="en-us" data-currency="$">🇺🇸 English (USD - $)</option>
+                            <option value="fr-ca" data-currency="CA$">🇨🇦 Français (CAD - CA$)</option>
+                            <option value="es-mx" data-currency="MX$">🇲🇽 Español (MXN - MX$)</option>
+                            <option value="pt-br" data-currency="R$">🇧🇷 Português (BRL - R$)</option>
+                        </optgroup>
+                        <optgroup label="Asie & Pacifique">
+                            <option value="zh" data-currency="¥">🇨🇳 中文 (CNY - ¥)</option>
+                            <option value="ja" data-currency="¥">🇯🇵 日本語 (JPY - ¥)</option>
+                            <option value="ko" data-currency="₩">🇰🇷 한국어 (KRW - ₩)</option>
+                            <option value="hi" data-currency="₹">🇮🇳 हिन्दी (INR - ₹)</option>
+                            <option value="en-au" data-currency="AU$">🇦🇺 English (AUD - AU$)</option>
+                        </optgroup>
+                        <optgroup label="Moyen-Orient & Afrique">
+                            <option value="he" data-currency="₪">🇮🇱 עברית (ILS - ₪)</option>
+                            <option value="ar" data-currency="﷼">🇸🇦 العربية (SAR - ﷼)</option>
+                            <option value="en-za" data-currency="ZAR">🇿🇦 English (ZAR)</option>
                         </optgroup>
                     </select>
                 </div>
-            </div>
+            </nav>
 
             <!-- Logo et Slogan au Centre -->
             <div class="brand-container">
@@ -46,39 +64,17 @@
             </div>
 
             <!-- Menu de droite : Thème -->
-            <div class="nav-side">
-                <select id="theme-switch" class="lang-selector">
-                    <option value="sombre" selected>Sombre</option>
-                    <option value="claire">Claire</option>
-                    <option value="mixte">Mixte</option>
-                    <option value="multicolore">Multicolore</option>
-                </select>
-            </div>
-            
-        </div>
-
-
-            <nav>
+            <nav class="nav-theme nav-side">
                 <div class="custom-select-wrapper">
-                    <select id="lang-switch" class="lang-selector">
-                        <optgroup label="Langue par défaut">
-                            <option value="fr" selected>🇫🇷 Français</option>
-                        </optgroup>
-                        <optgroup label="Europe">
-                            <option value="en">🇬🇧 English</option>
-                            <option value="es">🇪🇸 Español</option>
-                            <option value="de">🇩🇪 Deutsch</option>
-                        </optgroup>
+                    <select id="theme-switch" class="lang-selector">
+                        <option value="sombre" selected>Sombre</option>
+                        <option value="claire">Claire</option>
+                        <option value="mixte">Mixte</option>
+                        <option value="multicolore">Multicolore</option>
                     </select>
                 </div>
-                
-                <select id="theme-switch" class="lang-selector">
-                    <option value="sombre" selected>Sombre</option>
-                    <option value="claire">Claire</option>
-                    <option value="mixte">Mixte</option>
-                    <option value="multicolore">Multicolore</option>
-                </select>
             </nav>
+            
         </div>
 
         <!-- Le texte de présentation centré sur la vidéo -->
@@ -88,6 +84,7 @@
         </section>
         
     </header>
+
 
     <main id="app">
         <!-- Section Argumentaire Commercial -->
@@ -282,6 +279,101 @@
     background-clip: text;
     color: transparent;
     
+<style>
+/* --- LE HEADER AVEC VIDÉO --- */
+.hero-section {
+    position: relative;
+    min-height: 70vh; /* Prend 70% de la hauteur de l'écran */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Coupe ce qui dépasse pour que la vidéo reste dans son cadre */
+}
+
+/* La vidéo en plein écran dans le header */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Permet à la vidéo de couvrir tout l'espace sans se déformer */
+    z-index: 1;
+}
+
+/* Le filtre sombre par-dessus la vidéo */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65); /* Opacité à 65% */
+    z-index: 2;
+}
+
+/* --- LA BARRE DE NAVIGATION MODIFIÉE --- */
+.top-nav {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligné en haut pour laisser la place au logo géant */
+    padding: 2rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 150px; /* Assure que la barre englobe la taille du logo */
+}
+
+/* Les conteneurs des menus sur les côtés */
+.nav-side {
+    z-index: 4;
+}
+
+/* Le conteneur du logo au centre absolu */
+.brand-container {
+    display: flex;
+    flex-direction: column; /* Place le slogan sous le logo */
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centre parfaitement l'élément */
+    top: 2rem;
+    gap: 70px; /* Écarte le slogan pour compenser le scale 4.5 du logo */
+}
+
+/* Le Logo à l'échelle 4.5 */
+.logo {
+    height: 50px; /* Taille de base */
+    width: auto;
+    border-radius: 8px;
+    transform: scale(4.5); /* Mise à l'échelle demandée */
+    transform-origin: top center; /* S'assure qu'il grandit vers le bas et les côtés */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Légère ombre pour le faire ressortir de la vidéo */
+}
+
+/* Le slogan avec l'animation Arc-en-Ciel Google */
+.slogan {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+    /* Le dégradé qui contient les 4 couleurs Google vives + l'arc-en-ciel */
+    background: linear-gradient(
+        90deg, 
+        #FF3B30, /* Rouge très vif */
+        #007AFF, /* Bleu très vif */
+        #FFCC00, /* Jaune très vif */
+        #34C759, /* Vert très vif */
+        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30 /* Arc-en-ciel final complet */
+    );
+    background-size: 400% 100%; /* Étire le dégradé pour l'animer */
+    
+    /* Applique la couleur uniquement sur le texte */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    
     /* L'animation qui boucle à l'infini */
     animation: retrogradationGoogle 8s infinite linear;
     
@@ -294,7 +386,6 @@
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
 }
-
 
 /* Le bloc de texte centré sur la vidéo */
 .hero-content {
@@ -323,7 +414,8 @@
     line-height: 1.6;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
-</style> 
+</style>
+
 
     <script>
         // Le dictionnaire de base
