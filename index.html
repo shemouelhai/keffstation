@@ -281,8 +281,55 @@
     line-height: 1.6;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
-
-
 </style> 
+
+    <script>
+        // Le dictionnaire de base
+        const traductions = {
+            fr: {
+                titre_accueil: "La valeur est à la source.",
+                description: "Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs."
+            },
+            en: {
+                titre_accueil: "Value starts at the source.",
+                description: "Why pay middlemen? Our products come directly from the factory with <strong>less than 10% commission</strong>. Avoid malls and enjoy professional, regular, and seamless shipping."
+            }
+        };
+
+        // La fonction qui change le texte
+        function appliquerTraduction(langue) {
+            document.documentElement.lang = langue;
+            const elements = document.querySelectorAll('[data-i18n]');
+            
+            elements.forEach(el => {
+                const cle = el.getAttribute('data-i18n');
+                if (traductions[langue] && traductions[langue][cle]) {
+                    el.innerHTML = traductions[langue][cle];
+                }
+            });
+        }
+
+        // Les écouteurs pour tes deux menus distincts
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Écouteur pour le menu Langue
+            const menuLangue = document.getElementById("lang-switch");
+            if(menuLangue) {
+                menuLangue.addEventListener("change", (e) => {
+                    appliquerTraduction(e.target.value);
+                });
+            }
+
+            // Écouteur pour le menu Thème
+            const menuTheme = document.getElementById("theme-switch");
+            if(menuTheme) {
+                menuTheme.addEventListener("change", (e) => {
+                    document.documentElement.setAttribute('data-theme', e.target.value);
+                });
+            }
+        });
+    </script>
+
+    
 </body>
 </html>
