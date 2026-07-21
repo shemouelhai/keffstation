@@ -177,25 +177,82 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* --- LA BARRE DE NAVIGATION MODIFIÉE --- */
+.top-nav {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligné en haut pour laisser la place au logo géant */
+    padding: 2rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 150px; /* Assure que la barre englobe la taille du logo */
+}
+
+/* Les conteneurs des menus sur les côtés */
+.nav-side {
+    z-index: 4;
+}
+
+/* Le conteneur du logo au centre absolu */
 .brand-container {
     display: flex;
+    flex-direction: column; /* Place le slogan sous le logo */
     align-items: center;
-    gap: 15px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centre parfaitement l'élément */
+    top: 2rem;
+    gap: 70px; /* Écarte le slogan pour compenser le scale 4.5 du logo */
 }
 
+/* Le Logo à l'échelle 4.5 */
 .logo {
-    height: 50px;
+    height: 50px; /* Taille de base */
     width: auto;
     border-radius: 8px;
+    transform: scale(4.5); /* Mise à l'échelle demandée */
+    transform-origin: top center; /* S'assure qu'il grandit vers le bas et les côtés */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Légère ombre pour le faire ressortir de la vidéo */
 }
 
+/* Le slogan avec l'animation Arc-en-Ciel Google */
 .slogan {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: 1px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    
+    /* Le dégradé qui contient les 4 couleurs Google vives + l'arc-en-ciel */
+    background: linear-gradient(
+        90deg, 
+        #FF3B30, /* Rouge très vif */
+        #007AFF, /* Bleu très vif */
+        #FFCC00, /* Jaune très vif */
+        #34C759, /* Vert très vif */
+        #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30 /* Arc-en-ciel final complet */
+    );
+    background-size: 400% 100%; /* Étire le dégradé pour l'animer */
+    
+    /* Applique la couleur uniquement sur le texte */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    
+    /* L'animation qui boucle à l'infini */
+    animation: retrogradationGoogle 8s infinite linear;
+    
+    /* Ombre portée autour du texte pour qu'il soit lisible sur la vidéo */
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
 }
+
+/* L'animation du dégradé qui glisse en arrière-plan */
+@keyframes retrogradationGoogle {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
 
 /* Le bloc de texte centré sur la vidéo */
 .hero-content {
