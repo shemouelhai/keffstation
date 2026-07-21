@@ -7,36 +7,54 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="brand-container">
-            <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
-            <span class="slogan">Just Kiff Tech !</span>
+    <header class="hero-section">
+        
+        <!-- Vidéo en arrière-plan -->
+        <video class="video-background" autoplay loop muted playsinline>
+            <source src="https://raw.githubusercontent.com/shemouelhai/keffstation/808d599fe4a2186cabe6f59bcc9b448a9c07bce0/Logo/gemini_generated_video_d174786e.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Voile assombrissant pour bien lire le texte -->
+        <div class="video-overlay"></div>
+
+        <!-- La barre de navigation par-dessus la vidéo -->
+        <div class="top-nav">
+            <div class="brand-container">
+                <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
+                <span class="slogan">Just Kiff Tech !</span>
+            </div>
+
+            <nav>
+                <div class="custom-select-wrapper">
+                    <select id="lang-switch" class="lang-selector">
+                        <optgroup label="Langue par défaut">
+                            <option value="fr" selected>🇫🇷 Français</option>
+                        </optgroup>
+                        <optgroup label="Europe">
+                            <option value="en">🇬🇧 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </optgroup>
+                    </select>
+                </div>
+                
+                <select id="theme-switch" class="lang-selector">
+                    <option value="sombre" selected>Sombre</option>
+                    <option value="claire">Claire</option>
+                    <option value="mixte">Mixte</option>
+                    <option value="multicolore">Multicolore</option>
+                </select>
+            </nav>
         </div>
 
-        <nav>
-            <!-- Sélecteur de langue international -->
-            <div class="custom-select-wrapper">
-                <select id="lang-switch" class="lang-selector">
-                    <optgroup label="Langue par défaut">
-                        <option value="fr" selected>🇫🇷 Français</option>
-                    </optgroup>
-                    <optgroup label="Europe">
-                        <option value="en">🇬🇧 English</option>
-                        <option value="es">🇪🇸 Español</option>
-                        <option value="de">🇩🇪 Deutsch</option>
-                    </optgroup>
-                </select>
-            </div>
-            
-            <!-- Sélecteur de thème -->
-            <select id="theme-switch" class="lang-selector">
-                <option value="sombre" selected>Sombre</option>
-                <option value="claire">Claire</option>
-                <option value="mixte">Mixte</option>
-                <option value="multicolore">Multicolore</option>
-            </select>
-        </nav>
+        <!-- Le texte de présentation centré sur la vidéo -->
+        <section class="hero-content">
+            <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
+            <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
+        </section>
+        
     </header>
+
 
     <main id="app">
         <!-- Section Argumentaire Commercial -->
