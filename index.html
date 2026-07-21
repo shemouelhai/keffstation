@@ -1,27 +1,35 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="sombre"> <!-- Français et thème sombre par défaut -->
+<html lang="fr" data-theme="sombre">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KeffStation</title>
+    <title>KeffStation - Just Kiff Tech !</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        
         <div class="brand-container">
-            <!-- Utilisation du lien 'raw' pour que l'image s'affiche -->
             <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
             <span class="slogan">Just Kiff Tech !</span>
         </div>
 
         <nav>
+            <!-- Sélecteur de langue international -->
             <div class="custom-select-wrapper">
                 <select id="lang-switch" class="lang-selector">
-                    <option value="fr" selected>🇫🇷 Français</option>
-                    <option value="en">🇬🇧 English</option>
+                    <optgroup label="Langue par défaut">
+                        <option value="fr" selected>🇫🇷 Français</option>
+                    </optgroup>
+                    <optgroup label="Europe">
+                        <option value="en">🇬🇧 English</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                    </optgroup>
+                    <!-- Tu pourras rajouter les autres optgroups ici -->
                 </select>
             </div>
+            
+            <!-- Sélecteur de thème -->
             <select id="theme-switch" class="lang-selector">
                 <option value="sombre" selected>Sombre</option>
                 <option value="claire">Claire</option>
@@ -29,161 +37,13 @@
                 <option value="multicolore">Multicolore</option>
             </select>
         </nav>
-
-        /* --- HEADER & LOGO --- */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--secondary-bg);
-    padding: 1rem 2rem;
-    border-bottom: 2px solid var(--primary-color);
-}
-
-.brand-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo {
-    height: 50px; /* Ajuste la taille selon tes besoins */
-    width: auto;
-    border-radius: 8px; /* Si tu veux adoucir les bords */
-}
-
-.slogan {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-/* --- SECTIONS COMMERCIALES --- */
-.punchline-usine {
-    text-align: center;
-    padding: 3rem 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.punchline-usine h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.punchline-usine p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--text-color);
-    opacity: 0.9;
-}
-
-/* --- CARTES D'ABONNEMENT --- */
-.pricing-cards {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 2rem;
-    flex-wrap: wrap;
-}
-
-.card {
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-    width: 300px;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary-color);
-}
-
-.card.premium {
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
-}
-
-.prix {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 1rem 0;
-    color: var(--primary-color);
-}
-
-.prix span {
-    font-size: 1rem;
-    color: var(--text-color);
-}
-
-.badge-promo {
-    background: #28a745;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-
-.card ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 2rem;
-}
-
-.card ul li {
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 5px;
-}
-
-.btn-souscrire {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-}
-
-/* --- INFO LIVRAISON --- */
-.livraison-info {
-    text-align: center;
-    padding: 2rem;
-    background: var(--secondary-bg);
-    margin-top: 2rem;
-}
-
-.options-livraison {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.option {
-    background: var(--bg-color);
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.text-muted {
-    opacity: 0.6;
-}
-
     </header>
 
     <main id="app">
         <!-- Section Argumentaire Commercial -->
         <section class="punchline-usine">
-            <h1>La valeur est à la source.</h1>
-            <p>Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
+            <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
+            <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
         </section>
 
         <!-- Section Abonnements VIP -->
@@ -223,192 +83,7 @@ header {
         </section>
     </main>
 
+    <!-- Appel du fichier JavaScript tout en bas -->
     <script src="app.js"></script>
-
-        
-        <nav><!-- Sélecteur de langue international -->
-<div class="custom-select-wrapper">
-    <select id="lang-switch" class="lang-selector">
-        <optgroup label="Langue par défaut">
-            <option value="fr" selected>🇫🇷 Français</option>
-        </optgroup>
-        <optgroup label="Europe">
-            <option value="en">🇬🇧 English</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="it">🇮🇹 Italiano</option>
-            <option value="pt">🇵🇹 Português</option>
-            <option value="ru">🇷🇺 Русский</option>
-            <option value="nl">🇳🇱 Nederlands</option>
-            <option value="pl">🇵🇱 Polski</option>
-        </optgroup>
-        <optgroup label="Asie & Pacifique">
-            <option value="zh">🇨🇳 中文 (Chinois)</option>
-            <option value="ja">🇯🇵 日本語 (Japonais)</option>
-            <option value="ko">🇰🇷 한국어 (Coréen)</option>
-            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
-            <option value="vi">🇻🇳 Tiếng Việt</option>
-        </optgroup>
-        <optgroup label="Moyen-Orient & Afrique">
-            <option value="ar">🇸🇦 العربية (Arabe)</option>
-            <option value="tr">🇹🇷 Türkçe</option>
-            <option value="he">🇮🇱 עברית (Hébreu)</option>
-        </optgroup>
-    </select>
-</div>
-       <option value="fr" selected>Français</option>
-                <option value="en">English</option>
-            </select>
-            
-            <!-- Sélecteur de thème -->
-            <select id="theme-switch">
-                <option value="sombre" selected>Sombre</option>
-                <option value="claire">Claire</option>
-                <option value="mixte">Mixte</option>
-                <option value="multicolore">Multicolore</option>
-            </select>
-        </nav>
-    </header>
-
-    <!-- Contenu dynamique de la SPA -->
-    <main id="app">
-        <h1 data-i18n="titre_accueil">Chargement...</h1>
-        <p data-i18n="description">Chargement...</p>
-        <button data-i18n="bouton_boutique">Boutique</button>
-    </main>
-
-    <script src="app.js"></script>
-
-/* --- VARIABLES DE BASE (Transitions fluides) --- */
-:root {
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* 1. THÈME SOMBRE (Par défaut) */
-:root[data-theme="sombre"] {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --primary-color: #bb86fc;
-    --secondary-bg: #1e1e1e;
-    --border-color: #333333;
-}
-
-/* 2. THÈME CLAIRE */
-:root[data-theme="claire"] {
-    --bg-color: #f5f5f5;
-    --text-color: #1a1a1a;
-    --primary-color: #0056b3;
-    --secondary-bg: #ffffff;
-    --border-color: #dddddd;
-}
-
-/* 3. THÈME MIXTE (Ex: Header sombre, fond clair) */
-:root[data-theme="mixte"] {
-    --bg-color: #eceff1;
-    --text-color: #263238;
-    --primary-color: #ff9800;
-    --secondary-bg: #263238; /* Utilisé pour des cartes ou headers inversés */
-    --border-color: #b0bec5;
-}
-
-/* 4. THÈME MULTICOLORE (Vaporwave / Cyberpunk vibe) */
-:root[data-theme="multicolore"] {
-    --bg-color: #2b213a;
-    --text-color: #00ffcc;
-    --primary-color: #ff007f;
-    --secondary-bg: linear-gradient(135deg, #ff007f, #7400b8);
-    --border-color: #00ffcc;
-}
-
-/* --- APPLICATION DES VARIABLES --- */
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background: var(--secondary-bg);
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-button {
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-
-// --- 1. DICTIONNAIRE DE TRADUCTION ---
-// Le français est la base, on ajoute les autres langues selon les besoins
-const traductions = {
-    fr: {
-        titre_accueil: "Bienvenue sur KeffStation",
-        description: "La plateforme multiservices pour les professionnels : Boutique, Services, et Réseau Social.",
-        bouton_boutique: "Accéder à la Boutique électronique",
-        erreur_404: "Page introuvable."
-    },
-    en: {
-        titre_accueil: "Welcome to KeffStation",
-        description: "The multi-service platform for professionals: Shop, Services, and Social Network.",
-        bouton_boutique: "Access the Electronic Store",
-        erreur_404: "Page not found."
-    }
-};
-
-// Langue par défaut
-let langueActuelle = 'fr';
-
-// --- 2. FONCTION DE TRADUCTION DE LA SPA ---
-function appliquerTraduction(langue) {
-    langueActuelle = langue;
-    document.documentElement.lang = langue; // Met à jour l'attribut lang du HTML
-    
-    // Sélectionne tous les éléments avec l'attribut data-i18n
-    const elements = document.querySelectorAll('[data-i18n]');
-    
-    elements.forEach(el => {
-        const cle = el.getAttribute('data-i18n');
-        if (traductions[langue] && traductions[langue][cle]) {
-            el.textContent = traductions[langue][cle];
-        }
-    });
-}
-
-// --- 3. GESTIONNAIRES D'ÉVÉNEMENTS (Listeners) ---
-document.addEventListener("DOMContentLoaded", () => {
-    // Initialisation
-    appliquerTraduction(langueActuelle);
-
-    // Écouteur pour le changement de langue
-    const langSwitch = document.getElementById("lang-switch");
-    langSwitch.addEventListener("change", (e) => {
-        appliquerTraduction(e.target.value);
-    });
-
-    // Écouteur pour le changement de thème
-    const themeSwitch = document.getElementById("theme-switch");
-    themeSwitch.addEventListener("change", (e) => {
-        const themeChoisi = e.target.value;
-        document.documentElement.setAttribute('data-theme', themeChoisi);
-    });
-});
-
-// --- 4. LOGIQUE DE ROUTING SPA (Exemple basique) ---
-// Ici on simulerait le changement de "page" sans recharger
-function naviguerVers(route) {
-    const app = document.getElementById("app");
-    // Logique pour vider '#app' et injecter le nouveau contenu
-    // Puis rappeler appliquerTraduction(langueActuelle) sur le nouveau contenu
-    console.log(`Navigation vers : ${route}`);
-}
-
 </body>
 </html>
