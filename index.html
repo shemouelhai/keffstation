@@ -1,608 +1,768 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="sombre">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KeffStation - Just Kiff Tech !</title>
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KeffStation - Just Kiff Tech !</title>
 <style>
-/* --- VARIABLES DE THÈMES --- */
+/* ===================== VARIABLES DE THEMES ===================== */
 :root { transition: background-color 0.3s ease, color 0.3s ease; }
+:root[data-theme="sombre"] { --bg-color:#121212; --text-color:#e0e0e0; --primary-color:#bb86fc; --secondary-bg:#1e1e1e; --border-color:#333333; --overlay-bg:rgba(0,0,0,0.7); }
+:root[data-theme="claire"] { --bg-color:#f5f5f5; --text-color:#1a1a1a; --primary-color:#0056b3; --secondary-bg:#ffffff; --border-color:#dddddd; --overlay-bg:rgba(255,255,255,0.75); }
+:root[data-theme="mixte"] { --bg-color:#eceff1; --text-color:#263238; --primary-color:#ff9800; --secondary-bg:#cfd8dc; --border-color:#b0bec5; --overlay-bg:rgba(236,239,241,0.8); }
+:root[data-theme="multicolore"] { --bg-color:#2b213a; --text-color:#00ffcc; --primary-color:#ff007f; --secondary-bg:#3c2f54; --border-color:#00ffcc; --overlay-bg:rgba(43,33,58,0.7); }
 
-:root[data-theme="sombre"] {
-    --bg-color: #121212; --text-color: #e0e0e0; --primary-color: #bb86fc;
-    --secondary-bg: #1e1e1e; --border-color: #333333; --overlay-bg: rgba(0, 0, 0, 0.7);
-}
+* { box-sizing: border-box; }
+body { background-color:var(--bg-color); color:var(--text-color); font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; margin:0; padding:0 0 70px 0; }
 
-:root[data-theme="claire"] {
-    --bg-color: #f5f5f5; --text-color: #1a1a1a; --primary-color: #0056b3;
-    --secondary-bg: #ffffff; --border-color: #dddddd; --overlay-bg: rgba(255, 255, 255, 0.75);
-}
+/* ===================== HERO (video reste pure, rien dessus sauf logo/slogan/menus) ===================== */
+.hero-section { position:relative; min-height:35vh; display:flex; flex-direction:column; overflow:hidden; border-bottom:2px solid var(--primary-color); }
+.video-background { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+.video-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:var(--overlay-bg); z-index:2; transition:background 0.3s ease; }
+.header-elements { position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; padding:3rem 1rem 2rem; gap:24px; }
+.brand-container { display:flex; justify-content:center; }
+.logo { height:60px; width:auto; border-radius:15px; transform:scale(1.8); box-shadow:0 4px 15px rgba(0,0,0,0.4); }
+.slogan-section { text-align:center; margin-top:15px; }
+.slogan { font-size:1.8rem; font-weight:900; letter-spacing:3px; text-transform:uppercase;
+  background:linear-gradient(90deg,#FF3B30,#007AFF,#FFCC00,#34C759,#FF3B30,#FF9500,#FFCC00,#34C759,#007AFF,#5856D6,#FF3B30);
+  background-size:400% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:transparent;
+  animation:retrogradationGoogle 8s infinite linear; }
+@keyframes retrogradationGoogle { 0%{background-position:0% 50%;} 100%{background-position:100% 50%;} }
 
-:root[data-theme="mixte"] {
-    --bg-color: #eceff1; --text-color: #263238; --primary-color: #ff9800;
-    --secondary-bg: #cfd8dc; --border-color: #b0bec5; --overlay-bg: rgba(236, 239, 241, 0.8);
-}
+.nav-stacked { display:flex; flex-direction:column; gap:12px; width:260px; }
+.custom-select-wrapper { width:100%; }
+.lang-selector { width:100%; appearance:none; -webkit-appearance:none; background-color:#000; color:#FF3B30; border:2px solid #FF3B30; padding:12px 15px; font-size:15px; font-weight:bold; text-align:center; border-radius:12px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.5); transition:all 0.3s ease; }
+.lang-selector:hover { box-shadow:0 0 15px rgba(255,59,48,0.6); }
+.lang-selector.devise-selector { color:#34C759; border-color:#34C759; }
+.lang-selector.devise-selector:hover { box-shadow:0 0 15px rgba(52,199,89,0.6); }
 
-:root[data-theme="multicolore"] {
-    --bg-color: #2b213a; --text-color: #00ffcc; --primary-color: #ff007f;
-    --secondary-bg: #3c2f54; --border-color: #00ffcc; --overlay-bg: rgba(43, 33, 58, 0.7);
-}
+[data-i18n] { transition:opacity 0.3s ease-in-out; opacity:1; }
+.fade-out { opacity:0 !important; }
+[dir="rtl"] .hero-content { direction:rtl; }
+.hero-content { text-align:center; padding:1.5rem 2rem 0.5rem; max-width:800px; color:var(--text-color); }
+.hero-content h1 { font-size:2.5rem; margin-bottom:1rem; }
+.hero-content p { font-size:1.1rem; line-height:1.6; }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-}
+/* ===================== MENU CATALOGUE FLOTTANT ===================== */
+.catalog-floating-nav { position:fixed; top:20px; right:20px; z-index:1000; }
+.catalog-toggle-btn { background-color:#000; color:#FF3B30; border:2px solid #FF3B30; width:45px; height:45px; border-radius:12px; font-size:20px; font-weight:bold; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; transition:all 0.3s ease; }
+.catalog-toggle-btn:hover { background-color:#FF3B30; color:#000; box-shadow:0 0 15px rgba(255,59,48,0.8); }
+.catalog-dropdown-menu { display:none; position:absolute; top:55px; right:0; background-color:var(--secondary-bg); border:2px solid var(--primary-color); border-radius:12px; width:280px; padding:15px; box-shadow:0 10px 25px rgba(0,0,0,0.8); list-style:none; max-height:400px; overflow-y:auto; }
+.catalog-dropdown-menu.active { display:block; }
+.catalog-dropdown-menu li { margin-bottom:10px; border-bottom:1px solid var(--border-color); padding-bottom:8px; }
+.catalog-dropdown-menu li a { color:var(--text-color); text-decoration:none; font-size:0.95rem; font-weight:600; transition:color 0.2s; }
+.catalog-dropdown-menu li a:hover { color:var(--primary-color); }
 
-/* --- LE HEADER AVEC VIDÉO RÉDUITE --- */
-.hero-section {
-    position: relative;
-    min-height: 35vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-bottom: 2px solid var(--primary-color);
-}
+/* ===================== SOMMAIRE (hors header, article dédié) ===================== */
+.sommaire-article { padding:2.5rem 2rem; margin:2rem auto; max-width:1100px; background:var(--secondary-bg); border:1px solid var(--border-color); border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.3); }
+.sommaire-article h2 { margin-top:0; font-size:1.4rem; color:var(--primary-color); text-transform:uppercase; letter-spacing:1px; }
+.sommaire-tags { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:1rem; }
+.sommaire-tag { background:rgba(128,128,128,0.15); color:var(--text-color); padding:8px 16px; border-radius:20px; font-size:0.95rem; font-weight:600; text-decoration:none; border:1px solid var(--border-color); transition:all 0.3s; }
+.sommaire-tag:hover { background:var(--primary-color); color:#000; transform:translateY(-2px); }
 
-.video-background {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 1;
-}
+/* ===================== RAYONS ===================== */
+.rayon-section { padding:3rem 2rem; margin:2rem auto; max-width:1200px; background:var(--secondary-bg); border:1px solid var(--border-color); border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.3); scroll-margin-top:20px; }
+.rayon-header { border-left:5px solid var(--primary-color); padding-left:15px; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.rayon-header h2 { font-size:1.8rem; margin:0 0 5px 0; color:var(--text-color); }
+.rayon-header p { font-size:0.95rem; opacity:0.8; margin:0; }
+.rayon-onglets { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.5rem; }
+.onglet-btn { background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); padding:8px 16px; border-radius:20px; cursor:pointer; font-weight:600; font-size:0.9rem; }
+.onglet-btn.active { background:var(--primary-color); color:#000; border-color:var(--primary-color); }
+.onglet-panneau { display:none; }
+.onglet-panneau.active { display:block; }
+.retro-toggle { margin-bottom:1rem; display:flex; align-items:center; gap:10px; }
+.retro-toggle button { background:var(--bg-color); border:1px solid var(--primary-color); color:var(--primary-color); padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:700; }
+.retro-mode-on .produit-card { filter:sepia(0.6) contrast(1.05); }
 
-.video-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--overlay-bg);
-    z-index: 2;
-    transition: background 0.3s ease;
-}
+.rayon-grid-articles { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.5rem; margin-top:1rem; }
+.produit-card { background:var(--bg-color); border:1px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.25s; }
+.produit-card:hover { transform:translateY(-4px); border-color:var(--primary-color); }
+.produit-visuel { height:140px; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#fff; background:linear-gradient(135deg,var(--primary-color),#333); }
+.produit-corps { padding:1rem; flex:1; display:flex; flex-direction:column; gap:6px; }
+.produit-corps h3 { margin:0; font-size:1.05rem; }
+.produit-marque { font-size:0.8rem; opacity:0.7; }
+.produit-def, .produit-carac { font-size:0.85rem; line-height:1.4; opacity:0.9; }
+.produit-carac ul { margin:4px 0 0 0; padding-left:18px; }
+.produit-carac li { border-bottom:none; margin-bottom:2px; padding-bottom:0; }
+.produit-prix { font-weight:800; color:var(--primary-color); font-size:1.1rem; margin-top:auto; }
+.badge-annee { display:inline-block; background:var(--primary-color); color:#000; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:10px; margin-bottom:4px; }
 
-/* --- STRUCTURE D'EMPILEMENT CENTRALE --- */
-.header-elements {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 3rem;
-    gap: 30px;
-}
+/* ===================== ABONNEMENTS / LIVRAISON ===================== */
+.pricing-cards { display:flex; justify-content:center; gap:2rem; padding:3rem 2rem; flex-wrap:wrap; }
+.card { background:var(--secondary-bg); border:1px solid var(--border-color); border-radius:12px; padding:2rem; width:300px; text-align:center; transition:transform 0.3s ease; }
+.card:hover { transform:translateY(-5px); border-color:var(--primary-color); }
+.card.premium { border:2px solid var(--primary-color); box-shadow:0 0 15px rgba(255,0,127,0.2); }
+.prix { font-size:2.5rem; font-weight:bold; margin:1rem 0; color:var(--primary-color); }
+.prix span { font-size:1rem; color:var(--text-color); }
+.badge-promo { background:#28a745; color:white; padding:5px 10px; border-radius:20px; font-size:0.9rem; font-weight:bold; display:inline-block; margin-bottom:1rem; }
+ul { list-style:none; padding:0; margin-bottom:2rem; }
+ul li { margin-bottom:10px; border-bottom:1px solid var(--border-color); padding-bottom:5px; }
+button { background-color:var(--primary-color); color:#fff; border:none; padding:10px 20px; cursor:pointer; border-radius:5px; font-weight:bold; width:100%; font-size:1.1rem; }
+button:hover { filter:brightness(1.2); }
 
-/* --- LE LOGO --- */
-.brand-container {
-    display: flex;
-    justify-content: center;
-}
+.livraison-info { text-align:center; padding:2rem; background:var(--secondary-bg); margin:2rem auto; max-width:800px; border-radius:12px; }
+.options-livraison { display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; flex-wrap:wrap; }
+.option { background:var(--bg-color); padding:1rem; border-radius:8px; border:1px solid var(--border-color); max-width:500px; }
+.avertissement-douane { margin-top:1.5rem; font-size:0.85rem; opacity:0.85; border-top:1px dashed var(--border-color); padding-top:1rem; }
 
-.logo {
-    height: 60px;
-    width: auto;
-    border-radius: 15px; /* Bords arrondis (pas tout ronds) */
-    transform: scale(1.8); /* Mise à l'échelle */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
+/* ===================== TROC & SERVICES ===================== */
+#vue-troc { display:none; padding:1rem 2rem 2rem; max-width:1100px; margin:0 auto; }
+#vue-troc.active { display:block; }
+#vue-boutique.hidden { display:none; }
+.troc-intro { background:var(--secondary-bg); border:1px solid var(--border-color); border-radius:16px; padding:2rem; margin-bottom:2rem; }
+.troc-regles { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-top:1rem; }
+.regle-box { background:var(--bg-color); border:1px solid var(--border-color); border-radius:10px; padding:1rem; text-align:center; }
+.regle-box strong { color:var(--primary-color); font-size:1.2rem; display:block; }
 
-/* --- LE SLOGAN ARC-EN-CIEL --- */
-.slogan-section {
-    text-align: center;
-    margin-top: 15px;
-}
+.maker-form { background:var(--secondary-bg); border:1px solid var(--border-color); border-radius:16px; padding:2rem; margin-bottom:2rem; }
+.maker-form h2 { color:var(--primary-color); }
+.champ { margin-bottom:1rem; display:flex; flex-direction:column; gap:6px; }
+.champ label { font-weight:600; font-size:0.9rem; }
+.champ input, .champ select, .champ textarea { padding:10px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-color); color:var(--text-color); font-size:0.95rem; }
+.champ-ligne { display:flex; gap:1rem; flex-wrap:wrap; }
+.champ-ligne .champ { flex:1; min-width:150px; }
+#resultat-prix { margin-top:1rem; padding:1rem; border-radius:10px; background:var(--bg-color); border:1px dashed var(--primary-color); font-weight:700; }
 
-.slogan {
-    font-size: 1.8rem;
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    background: linear-gradient(90deg, #FF3B30, #007AFF, #FFCC00, #34C759, #FF3B30, #FF9500, #FFCC00, #34C759, #007AFF, #5856D6, #FF3B30);
-    background-size: 400% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    animation: retrogradationGoogle 8s infinite linear;
-}
+.services-defaut { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1rem; margin-top:1rem; }
+.service-card { background:var(--bg-color); border:1px solid var(--border-color); border-radius:10px; padding:1rem; }
+.service-card h4 { margin:0 0 6px 0; font-size:0.95rem; color:var(--primary-color); }
+.service-card p { margin:0; font-size:0.85rem; opacity:0.85; }
+.genre-titre { margin-top:2rem; font-size:1.1rem; color:var(--primary-color); border-left:4px solid var(--primary-color); padding-left:10px; }
 
-@keyframes retrogradationGoogle {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-}
+.mes-annonces { margin-top:2rem; }
+.annonce-card { background:var(--bg-color); border:1px solid var(--primary-color); border-radius:10px; padding:1rem; margin-bottom:0.8rem; }
 
-/* --- LES MENUS EMPILÉS (Noir & Rouge) --- */
-.nav-stacked {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 250px;
-}
+/* ===================== FOOTER ===================== */
+footer.site-footer { background:var(--secondary-bg); border-top:2px solid var(--primary-color); padding:3rem 2rem 2rem; margin-top:2rem; }
+.footer-inner { max-width:1100px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:1.5rem; text-align:center; }
+.footer-inner h3 { margin:0; font-size:1.1rem; opacity:0.9; }
+.auth-buttons { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.auth-btn { display:flex; align-items:center; gap:8px; padding:10px 16px; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-color); color:var(--text-color); text-decoration:none; font-weight:600; font-size:0.9rem; width:auto; }
+.auth-btn:hover { border-color:var(--primary-color); color:var(--primary-color); }
+.footer-note { font-size:0.75rem; opacity:0.6; max-width:600px; }
 
-.custom-select-wrapper {
-    width: 100%;
-}
-
-.lang-selector {
-    width: 100%;
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: #000;
-    color: #FF3B30;
-    border: 2px solid #FF3B30;
-    padding: 12px 15px;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
-
-.lang-selector:hover {
-    box-shadow: 0 0 15px rgba(255, 59, 48, 0.6);
-}
-/* --- TRANSITION DES TRADUCTIONS ET SUPPORT RTL --- */
-[data-i18n] {
-    transition: opacity 0.3s ease-in-out;
-    opacity: 1;
-}
-
-.fade-out {
-    opacity: 0 !important;
-}
-
-/* Aligne le texte à droite quand la langue est Hébreu ou Arabe */
-[dir="rtl"] .hero-content {
-    direction: rtl;
-}
-
-/* --- TEXTE DE PRÉSENTATION --- */
-.hero-content {
-    text-align: center;
-    padding: 2rem;
-    max-width: 800px;
-    color: var(--text-color);
-}
-
-.hero-content h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-.hero-content p { font/* --- MENU CATALOGUE FLOTTANT (Haut Droite, Sticky) --- */
-.catalog-floating-nav {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.catalog-toggle-btn {
-    background-color: #000;
-    color: #FF3B30;
-    border: 2px solid #FF3B30;
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.catalog-toggle-btn:hover {
-    background-color: #FF3B30;
-    color: #000;
-    box-shadow: 0 0 15px rgba(255, 59, 48, 0.8);
-}
-
-/* Le menu déroulant du sommaire des rayons */
-.catalog-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 55px;
-    right: 0;
-    background-color: var(--secondary-bg);
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
-    width: 280px;
-    padding: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-    list-style: none;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.catalog-dropdown-menu.active {
-    display: block;
-}
-
-.catalog-dropdown-menu li {
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 8px;
-}
-
-.catalog-dropdown-menu li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: color 0.2s;
-}
-
-.catalog-dropdown-menu li a:hover {
-    color: var(--primary-color);
-}
-
-/* --- STYLE DES RAYONS DU CATALOGUE --- */
-.rayon-section {
-    padding: 4rem 2rem;
-    margin: 2rem auto;
-    max-width: 1100px;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-
-.rayon-header {
-    border-left: 5px solid var(--primary-color);
-    padding-left: 15px;
-    margin-bottom: 1.5rem;
-}
-
-.rayon-header h2 {
-    font-size: 2rem;
-    margin: 0 0 5px 0;
-    color: var(--text-color);
-}
-
-.rayon-header p {
-    font-size: 1rem;
-    opacity: 0.8;
-    margin: 0;
-}
-
-.rayon-grid-articles {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.article-placeholder {
-    background: var(--bg-color);
-    border: 1px dashed var(--border-color);
-    border-radius: 10px;
-    padding: 2rem;
-    text-align: center;
-    opacity: 0.6;
-    font-style: italic;
-}
-
-/* --- SOMMAIRE STATIQUE DANS LE HERO --- */
-.hero-sommaire {
-    margin-top: 1.5rem;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 15px 25px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
-    max-width: 700px;
-}
-
-.hero-sommaire h3 {
-    font-size: 1rem;
-    margin: 0 0 10px 0;
-    color: #FFCC00;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.sommaire-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-}
-
-.sommaire-tag {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: background 0.3s;
-}
-
-.sommaire-tag:hover {
-    background: var(--primary-color);
-    color: #000;
-}
--size: 1.1rem; line-height: 1.6; }
-
-/* --- CONTENU DU SITE (PRIX ET LIVRAISON) --- */
-.pricing-cards { display: flex; justify-content: center; gap: 2rem; padding: 4rem 2rem; flex-wrap: wrap; }
-.card { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; width: 300px; text-align: center; transition: transform 0.3s ease; }
-.card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
-.card.premium { border: 2px solid var(--primary-color); box-shadow: 0 0 15px rgba(255, 0, 127, 0.2); }
-.prix { font-size: 2.5rem; font-weight: bold; margin: 1rem 0; color: var(--primary-color); }
-.prix span { font-size: 1rem; color: var(--text-color); }
-.badge-promo { background: #28a745; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; display: inline-block; margin-bottom: 1rem; }
-ul { list-style: none; padding: 0; margin-bottom: 2rem; }
-ul li { margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
-button { background-color: var(--primary-color); color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; width: 100%; font-size: 1.1rem; }
-button:hover { filter: brightness(1.2); }
-
-.livraison-info { text-align: center; padding: 2rem; background: var(--secondary-bg); margin: 2rem auto; max-width: 800px; border-radius: 12px; }
-.options-livraison { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
-.option { background: var(--bg-color); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); }
-.text-muted { opacity: 0.6; }
+/* ===================== BOTTOM NAV STICKY ===================== */
+.bottom-nav { position:fixed; bottom:0; left:0; width:100%; z-index:999; background:var(--secondary-bg); border-top:2px solid var(--primary-color); display:flex; box-shadow:0 -4px 15px rgba(0,0,0,0.4); }
+.bottom-nav button { background:none; border:none; color:var(--text-color); flex:1; padding:12px 0; font-weight:700; font-size:0.95rem; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.bottom-nav button.active { color:var(--primary-color); }
+.bottom-nav button span.icone { font-size:1.3rem; }
 </style>
 </head>
 <body>
-   
-    <!-- L'en-tête -->
-    <header class="hero-section">
-        <video class="video-background" autoplay loop muted playsinline>
-            <source src="https://raw.githubusercontent.com/shemouelhai/keffstation/808d599fe4a2186cabe6f59bcc9b448a9c07bce0/Logo/gemini_generated_video_d174786e.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
 
-        <div class="header-elements">
-            
-            <div class="brand-container">
-                <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
-            </div>
+<!-- ===================== HEADER / HERO (rien de nouveau posé sur la video) ===================== -->
+<header class="hero-section">
+  <video class="video-background" autoplay loop muted playsinline>
+    <source src="https://raw.githubusercontent.com/shemouelhai/keffstation/808d599fe4a2186cabe6f59bcc9b448a9c07bce0/Logo/gemini_generated_video_d174786e.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
 
-            <section class="slogan-section">
-                <span class="slogan">Just Kiff Tech !</span>
-            </section>
-
-    <!-- Menu Flottant Catalogue (Top-Right) -->
-    <div class="catalog-floating-nav">
-        <button id="catalog-toggle" class="catalog-toggle-btn" title="Sommaire des rayons">...</button>
-        <ul id="catalog-dropdown" class="catalog-dropdown-menu">
-            <li><a href="#smart-immobilier">🏠 Smart Immobilier</a></li>
-            <li><a href="#smartphones-computers">📱 Smartphones & Computers</a></li>
-            <li><a href="#gadgets-accessoires">⌚ Gadgets & Accessoires</a></li>
-            <li><a href="#consoles-videogames">🎮 Consoles & Vidéogames</a></li>
-            <li><a href="#robots-compagnie">🤖 Robots Compagnie & Ménager</a></li>
-            <li><a href="#smart-electromenager">⚡ Smart Électroménager</a></li>
-            <li><a href="#biotech-handicap">♿️ Biotech Handicap</a></li>
-            <li><a href="#robots-culture">🌱 Robots Culture (Int/Ext)</a></li>
-            <li><a href="#box-amenager">📦 Box Aménager</a></li>
-            <li><a href="#vehicules-electriques">⚡ Véhicules Ind. Électriques</a></li>
-        </ul>
+  <div class="header-elements">
+    <div class="brand-container">
+      <img src="https://raw.githubusercontent.com/shemouelhai/keffstation/efb1b95ee8616ee1b3e24b34ec590a404f74b261/Logo/1783886339689.png" alt="Logo KeffStation" class="logo">
     </div>
 
-            
+    <section class="slogan-section"><span class="slogan">Just Kiff Tech !</span></section>
 
-            <div class="nav-stacked">
-                <nav class="nav-langue">
-                    <div class="custom-select-wrapper">
-                        <select id="lang-switch" class="lang-selector">
-                            <optgroup label="Langue par défaut">
-                                <option value="fr" data-currency="€" selected>🇫🇷 Français (EUR - €)</option>
-                            </optgroup>
-                            <optgroup label="Europe">
-                                <option value="en-gb" data-currency="£">🇬🇧 English (GBP - £)</option>
-                                <option value="es" data-currency="€">🇪🇸 Español (EUR - €)</option>
-                                <option value="de" data-currency="€">🇩🇪 Deutsch (EUR - €)</option>
-                                <option value="it" data-currency="€">🇮🇹 Italiano (EUR - €)</option>
-                                <option value="pt" data-currency="€">🇵🇹 Português (EUR - €)</option>
-                                <option value="ru" data-currency="₽">🇷🇺 Русский (RUB - ₽)</option>
-                            </optgroup>
-                            <optgroup label="Amériques">
-                                <option value="en-us" data-currency="$">🇺🇸 English (USD - $)</option>
-                                <option value="fr-ca" data-currency="CA$">🇨🇦 Français (CAD - CA$)</option>
-                                <option value="es-mx" data-currency="MX$">🇲🇽 Español (MXN - MX$)</option>
-                                <option value="pt-br" data-currency="R$">🇧🇷 Português (BRL - R$)</option>
-                            </optgroup>
-                            <optgroup label="Asie & Pacifique">
-                                <option value="zh" data-currency="¥">🇨🇳 中文 (CNY - ¥)</option>
-                                <option value="ja" data-currency="¥">🇯🇵 日本語 (JPY - ¥)</option>
-                                <option value="ko" data-currency="₩">🇰🇷 한국어 (KRW - ₩)</option>
-                                <option value="hi" data-currency="₹">🇮🇳 हिन्दी (INR - ₹)</option>
-                                <option value="en-au" data-currency="AU$">🇦🇺 English (AUD - AU$)</option>
-                            </optgroup>
-                            <optgroup label="Moyen-Orient & Afrique">
-                                <option value="he" data-currency="₪">🇮🇱 עברית (ILS - ₪)</option>
-                                <option value="ar" data-currency="﷼">🇸🇦 العربية (SAR - ﷼)</option>
-                                <option value="en-za" data-currency="ZAR">🇿🇦 English (ZAR)</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </nav>
+    <div class="catalog-floating-nav">
+      <button id="catalog-toggle" class="catalog-toggle-btn" title="Sommaire des rayons">☰</button>
+      <ul id="catalog-dropdown" class="catalog-dropdown-menu"></ul>
+    </div>
 
-                <nav class="nav-theme">
-                    <div class="custom-select-wrapper">
-                        <select id="theme-switch" class="lang-selector">
-                            <option value="sombre" selected>Sombre</option>
-                            <option value="claire">Claire</option>
-                            <option value="mixte">Mixte</option>
-                            <option value="multicolore">Multicolore</option>
-                        </select>
-                    </div>
-                </nav>
-            </div>
-
-            <section class="hero-content">
-                <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
-                <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
-         </section>
+    <div class="nav-stacked">
+      <nav class="nav-langue">
+        <div class="custom-select-wrapper">
+          <select id="lang-switch" class="lang-selector">
+            <optgroup label="Langue par défaut"><option value="fr" selected>🇫🇷 Français</option></optgroup>
+            <optgroup label="Europe">
+              <option value="en-gb">🇬🇧 English</option>
+              <option value="es">🇪🇸 Español</option>
+              <option value="de">🇩🇪 Deutsch</option>
+              <option value="it">🇮🇹 Italiano</option>
+              <option value="pt">🇵🇹 Português</option>
+              <option value="ru">🇷🇺 Русский</option>
+            </optgroup>
+            <optgroup label="Amériques">
+              <option value="en-us">🇺🇸 English (US)</option>
+              <option value="fr-ca">🇨🇦 Français (CA)</option>
+              <option value="es-mx">🇲🇽 Español (MX)</option>
+              <option value="pt-br">🇧🇷 Português (BR)</option>
+            </optgroup>
+            <optgroup label="Asie & Pacifique">
+              <option value="zh">🇨🇳 中文</option>
+              <option value="ja">🇯🇵 日本語</option>
+              <option value="ko">🇰🇷 한국어</option>
+              <option value="hi">🇮🇳 हिन्दी</option>
+              <option value="en-au">🇦🇺 English (AU)</option>
+            </optgroup>
+            <optgroup label="Moyen-Orient & Afrique">
+              <option value="he">🇮🇱 עברית</option>
+              <option value="ar">🇸🇦 العربية</option>
+              <option value="en-za">🇿🇦 English (ZA)</option>
+            </optgroup>
+          </select>
         </div>
-                    <!-- Sommaire statique des rayons dans le Hero -->
-            <div class="hero-sommaire">
-                <h3>📍 Sommaire des Rayons KeffStation</h3>
-                <div class="sommaire-tags">
-                    <a href="#smart-immobilier" class="sommaire-tag">Immobilier</a>
-                    <a href="#smartphones-computers" class="sommaire-tag">Phones & PCs</a>
-                    <a href="#gadgets-accessoires" class="sommaire-tag">Gadgets</a>
-                    <a href="#consoles-videogames" class="sommaire-tag">Gaming</a>
-                    <a href="#robots-compagnie" class="sommaire-tag">Robots</a>
-                    <a href="#smart-electromenager" class="sommaire-tag">Électroménager</a>
-                    <a href="#biotech-handicap" class="sommaire-tag">Biotech</a>
-                    <a href="#robots-culture" class="sommaire-tag">Culture</a>
-                    <a href="#box-amenager" class="sommaire-tag">Box</a>
-                    <a href="#vehicules-electriques" class="sommaire-tag">Véhicules</a>
-                </div>
-            </div>
+      </nav>
 
-    </header>
+      <nav class="nav-theme">
+        <div class="custom-select-wrapper">
+          <select id="theme-switch" class="lang-selector">
+            <option value="sombre" selected>Sombre</option>
+            <option value="claire">Claire</option>
+            <option value="mixte">Mixte</option>
+            <option value="multicolore">Multicolore</option>
+          </select>
+        </div>
+      </nav>
 
-    <main id="app">
-        <!-- Section Abonnements VIP -->
-        <section class="pricing-cards">
-            <div class="card">
-                <h3>Abonnement Mensuel</h3>
-                <div class="prix">5€ <span>/ mois</span></div>
-                <div class="badge-promo">-13% sur inscription</div>
-                <ul>
-                    <li>Accès catalogue usine</li>
-                    <li>Support prioritaire</li>
-                </ul>
-                <button class="btn-souscrire">Souscrire</button>
-            </div>
+      <nav class="nav-devise">
+        <div class="custom-select-wrapper">
+          <select id="devise-switch" class="lang-selector devise-selector">
+            <option value="EUR" data-taux="1" data-symbole="€" selected>€ Euro</option>
+            <option value="GBP" data-taux="0.85" data-symbole="£">£ Livre Sterling</option>
+            <option value="USD" data-taux="1.08" data-symbole="$">$ Dollar US</option>
+            <option value="CAD" data-taux="1.47" data-symbole="CA$">CA$ Dollar Canadien</option>
+            <option value="MXN" data-taux="18.5" data-symbole="MX$">MX$ Peso Mexicain</option>
+            <option value="BRL" data-taux="5.9" data-symbole="R$">R$ Real Brésilien</option>
+            <option value="CNY" data-taux="7.85" data-symbole="¥">¥ Yuan</option>
+            <option value="JPY" data-taux="158" data-symbole="¥">¥ Yen</option>
+            <option value="KRW" data-taux="1450" data-symbole="₩">₩ Won</option>
+            <option value="INR" data-taux="90" data-symbole="₹">₹ Roupie</option>
+            <option value="AUD" data-taux="1.62" data-symbole="AU$">AU$ Dollar Australien</option>
+            <option value="ILS" data-taux="4.0" data-symbole="₪">₪ Shekel</option>
+            <option value="SAR" data-taux="4.05" data-symbole="﷼">﷼ Riyal</option>
+            <option value="ZAR" data-taux="20.5" data-symbole="R">R Rand</option>
+          </select>
+        </div>
+      </nav>
+    </div>
 
-            <div class="card premium">
-                <h3>Abonnement Annuel</h3>
-                <div class="prix">70€ <span>/ an</span></div>
-                <div class="badge-promo">-17% sur votre caisse totale toute l'année</div>
-                <ul>
-                    <li>Avantage maximum</li>
-                    <li>Livraison Express privilégiée</li>
-                </ul>
-                <button class="btn-souscrire">Souscrire</button>
-            </div>
-        </section>
+    <section class="hero-content">
+      <h1 data-i18n="titre_accueil">La valeur est à la source.</h1>
+      <p data-i18n="description">Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs.</p>
+    </section>
+  </div>
+</header>
 
-        <!-- Section Livraison -->
-        <section class="livraison-info">
-            <h2>Expédition & Réception</h2>
-            <p>Validation par caisse de produits. Choisissez votre méthode de livraison :</p>
-            <div class="options-livraison">
-                <div class="option">📦 <strong>Basic :</strong> Standard, selon poids et volume.</div>
-                <div class="option">🚀 <strong>Express :</strong> Réception rapide, traitement prioritaire.</div>
-                <div class="option text-muted">🔧 <em>Option d'installation (Bientôt disponible)</em></div>
-            </div>
-        </section>
-    </main>
+<!-- ===================== SOMMAIRE : hors header, article dédié juste après le hero ===================== -->
+<section id="vue-boutique">
+<article class="sommaire-article" id="sommaire">
+  <h2>📍 Sommaire des Rayons KeffStation</h2>
+  <div class="sommaire-tags" id="sommaire-tags"></div>
+</article>
 
-    <script>
-        // Le dictionnaire complet avec les caractères non-latins
-        const traductions = {
-            fr: {
-                titre_accueil: "La valeur est à la source.",
-                description: "Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs."
-            },
-            en: {
-                titre_accueil: "Value starts at the source.",
-                description: "Why pay middlemen? Our products come directly from the factory with <strong>less than 10% commission</strong>. Avoid malls and enjoy professional, regular, and seamless shipping."
-            },
-            es: {
-                titre_accueil: "El valor está en la fuente.",
-                description: "¿Por qué pagar a intermediarios? Nuestros productos provienen directamente de fábrica con <strong>menos del 10% de comisión</strong>. Evita los centros comerciales y disfruta de un envío profesional, regular y sin problemas."
-            },
-            de: {
-                titre_accueil: "Der Wert liegt an der Quelle.",
-                description: "Warum Zwischenhändler bezahlen? Unsere Produkte kommen direkt ab Werk mit <strong>weniger als 10% Provision</strong>. Vermeiden Sie Einkaufszentren und genießen Sie professionellen Versand."
-            },
-            it: {
-                titre_accueil: "Il valore è alla fonte.",
-                description: "Perché pagare gli intermediari? I nostri prodotti provengono direttamente dalla fabbrica con <strong>meno del 10% di commissione</strong>."
-            },
-            pt: {
-                titre_accueil: "O valor está na fonte.",
-                description: "Por que pagar intermediários? Nossos produtos vêm diretamente da fábrica com <strong>menos de 10% de comissão</strong>."
-            },
-            ru: {
-                titre_accueil: "Ценность у истоков.",
-                description: "Зачем платить посредникам? Наши товары поступают напрямую с завода с <strong>комиссией менее 10%</strong>. Избегайте торговых центров и наслаждайтесь профессиональной доставкой."
-            },
-            zh: {
-                titre_accueil: "价值源于源头。",
-                description: "为什么要向中间商付款？我们的产品直接来自工厂，<strong>佣金低于10%</strong>。避开购物中心，享受专业、定期的无缝运输。"
-            },
-            ja: {
-                titre_accueil: "価値は源泉にあり。",
-                description: "なぜ仲介業者に支払うのですか？当社の製品は工場から直接届き、<strong>手数料は10％未満</strong>です。ショッピングモールを避けて、プロの配送をお楽しみください。"
-            },
-            ko: {
-                titre_accueil: "가치는 원천에 있습니다.",
-                description: "왜 중개인에게 돈을 지불합니까? 당사의 제품은 <strong>10% 미만의 수수료</strong>로 공장에서 직접 제공됩니다. 쇼핑몰을 피하고 전문적인 배송을 즐기십시오."
-            },
-            hi: {
-                titre_accueil: "मूल्य स्रोत पर है।",
-                description: "बिचौलियों को भुगतान क्यों करें? हमारे उत्पाद सीधे कारखाने से <strong>10% से कम कमीशन</strong> के साथ आते हैं। मॉल से बचें और पेशेवर शिपिंग का आनंद लें।"
-            },
-            he: {
-                titre_accueil: "הערך נמצא במקור.",
-                description: "למה לשלם למתווכים? המוצרים שלנו מגיעים ישירות מהמפעל עם <strong>פחות מ-10% עמלה</strong>. הימנעו מקניונים ותיהנו ממשלוח מקצועי, סדיר וחלק."
-            },
-            ar: {
-                titre_accueil: "القيمة في المصدر.",
-                description: "لماذا تدفع للوسطاء؟ منتجاتنا تأتي مباشرة من المصنع بـ <strong>عمولة أقل من 10%</strong>. تجنب المراكز التجارية واستمتع بشحن احترافي وسلس."
-            }
-        };
+<main id="rayons-container"></main>
 
-        // La fonction de traduction avec Transition
-        function appliquerTraduction(langueComplete) {
-            const langueBase = langueComplete.split('-')[0]; 
-            document.documentElement.lang = langueBase;
-            
-            // Gérer le sens de lecture (RTL pour Hébreu et Arabe)
-            if (langueBase === 'he' || langueBase === 'ar') {
-                document.documentElement.setAttribute('dir', 'rtl');
-            } else {
-                document.documentElement.setAttribute('dir', 'ltr');
-            }
+<!-- Abonnements -->
+<section class="pricing-cards">
+  <div class="card">
+    <h3>Abonnement Mensuel</h3>
+    <div class="prix prix-produit" data-eur="5">5€ <span>/ mois</span></div>
+    <div class="badge-promo">-13% sur inscription</div>
+    <ul><li>Accès catalogue usine</li><li>Support prioritaire</li></ul>
+    <button class="btn-souscrire">Souscrire</button>
+  </div>
+  <div class="card premium">
+    <h3>Abonnement Annuel</h3>
+    <div class="prix prix-produit" data-eur="70">70€ <span>/ an</span></div>
+    <div class="badge-promo">-17% sur votre caisse totale toute l'année</div>
+    <ul><li>Avantage maximum</li><li>Livraison Express privilégiée</li></ul>
+    <button class="btn-souscrire">Souscrire</button>
+  </div>
+</section>
 
-            const elements = document.querySelectorAll('[data-i18n]');
-            
-            elements.forEach(el => {
-                // 1. On cache le texte en fondu
-                el.classList.add('fade-out');
-                
-                // 2. On attend 300ms (le temps de l'animation CSS), on traduit, et on réaffiche
-                setTimeout(() => {
-                    const cle = el.getAttribute('data-i18n');
-                    if (traductions[langueBase] && traductions[langueBase][cle]) {
-                        el.innerHTML = traductions[langueBase][cle];
-                    }
-                    el.classList.remove('fade-out');
-                }, 300);
-            });
-        }
+<!-- Livraison : uniquement Express Supra Fast -->
+<section class="livraison-info">
+  <h2>Expédition & Réception</h2>
+  <p>Validation par caisse de produits. Un seul mode de livraison, pensé pour la rapidité :</p>
+  <div class="options-livraison">
+    <div class="option">🚀🚀 <strong>Express Supra Fast :</strong> traitement et acheminement prioritaires, réception la plus rapide possible.</div>
+  </div>
+  <div class="avertissement-douane">
+    ⚠️ Pour les colis à forte valeur commerciale, lourds et/ou volumineux, des taxes et frais de douane peuvent s'appliquer à la réception. Ces frais relèvent de la réglementation de l'État/pays de réception du ou des colis, et restent à la charge du destinataire.
+  </div>
+</section>
+</section>
+<!-- fin #vue-boutique -->
 
-        // Écouteurs d'événements
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuLangue = document.getElementById("lang-switch");
-            if(menuLangue) {
-                menuLangue.addEventListener("change", (e) => {
-                    const langueChoisie = e.target.value;
-                    const optionSelectionnee = e.target.options[e.target.selectedIndex];
-                    const deviseChoisie = optionSelectionnee.getAttribute("data-currency");
-                    console.log("Langue complète activée :", langueChoisie, "| Devise activée :", deviseChoisie);
-                    
-                    // Lance l'animation de traduction
-                    appliquerTraduction(langueChoisie);
-                });
-            }
+<!-- ===================== TROC & SERVICES ===================== -->
+<section id="vue-troc">
+  <article class="troc-intro">
+    <h2>🔄 Troc & Services</h2>
+    <p>Échangez des objets ou des services entre particuliers et professionnels. Chaque profil dispose de sa propre page "boutique" (blog) qu'il génère lui-même via le formulaire ci-dessous.</p>
+    <div class="troc-regles">
+      <div class="regle-box"><strong>1€</strong>par étape courte</div>
+      <div class="regle-box"><strong>10€ min</strong>pour un service basique</div>
+      <div class="regle-box"><strong>5€ min</strong>par étape longue</div>
+      <div class="regle-box"><strong>Libre</strong>valeur définie sur votre page blog</div>
+    </div>
+  </article>
 
-            const menuTheme = document.getElementById("theme-switch");
-            if(menuTheme) {
-                menuTheme.addEventListener("change", (e) => {
-                    document.documentElement.setAttribute('data-theme', e.target.value);
-                });
-            }
-        });
-    </script>
+  <article class="maker-form">
+    <h2>🛠️ Maker Blog Page — créer ma page profil / boutique</h2>
+    <p>Remplissez ce formulaire pour générer votre page : elle sert à présenter vos objets ou vos services (particulier ou professionnel) et leur valeur d'échange.</p>
+    <div class="champ">
+      <label>Nom de votre boutique / profil</label>
+      <input type="text" id="mf-nom" placeholder="Ex : L'Atelier de Sam">
+    </div>
+    <div class="champ-ligne">
+      <div class="champ">
+        <label>Statut</label>
+        <select id="mf-statut"><option>Particulier</option><option>Professionnel</option></select>
+      </div>
+      <div class="champ">
+        <label>Type de contenu</label>
+        <select id="mf-type"><option value="objet">Objet(s)</option><option value="service">Service(s)</option></select>
+      </div>
+    </div>
+    <div class="champ">
+      <label>Titre de l'article / du service proposé</label>
+      <input type="text" id="mf-titre" placeholder="Ex : Promenade de chien / Réparation vélo">
+    </div>
+    <div class="champ">
+      <label>Description</label>
+      <textarea id="mf-description" rows="3" placeholder="Décrivez l'objet ou le service, contre quoi vous souhaitez l'échanger..."></textarea>
+    </div>
+    <div class="champ-ligne">
+      <div class="champ">
+        <label>Type d'étape</label>
+        <select id="mf-etape"><option value="courte">Étape courte (1€/étape)</option><option value="longue">Étape longue (5€ min/étape)</option><option value="libre">Valeur libre (troc pur)</option></select>
+      </div>
+      <div class="champ">
+        <label>Nombre d'étapes</label>
+        <input type="number" id="mf-nb-etapes" min="1" value="1">
+      </div>
+      <div class="champ">
+        <label>Service basique ? (min. 10€)</label>
+        <select id="mf-basique"><option value="non">Non</option><option value="oui">Oui</option></select>
+      </div>
+    </div>
+    <div class="champ">
+      <label>Valeur libre (si "valeur libre" sélectionné, décrivez ce que vous échangez)</label>
+      <input type="text" id="mf-valeur-libre" placeholder="Ex : contre un objet équivalent, à négocier">
+    </div>
+    <button id="mf-generer">Générer ma page / mon annonce</button>
+    <div id="resultat-prix"></div>
+  </article>
 
+  <section class="mes-annonces">
+    <h2>📄 Mes annonces générées</h2>
+    <div id="liste-annonces"></div>
+  </section>
+
+  <article class="troc-intro">
+    <h2>✨ Services proposés par défaut</h2>
+    <p>Une base de départ pour vous inspirer — modifiable ensuite depuis votre page profil.</p>
+    <div id="services-defaut-container"></div>
+  </article>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <h3>Inscription / Connexion</h3>
+    <div class="auth-buttons">
+      <a class="auth-btn" href="#">🔵 Google</a>
+      <a class="auth-btn" href="#">📧 Gmail</a>
+      <a class="auth-btn" href="#">💬 WhatsApp</a>
+      <a class="auth-btn" href="#">✈️ Telegram</a>
+      <a class="auth-btn" href="#">📘 Facebook</a>
+      <a class="auth-btn" href="#">📸 Instagram</a>
+      <a class="auth-btn" href="#">🎵 TikTok</a>
+      <a class="auth-btn" href="#">✖️ X</a>
+      <a class="auth-btn" href="#">👻 Snapchat</a>
+    </div>
+    <p class="footer-note">La connexion réelle (OAuth) sera branchée côté backend. Ces boutons sont pour l'instant des emplacements visuels prêts à connecter.</p>
+    <p class="footer-note">© 2026 Just Keff Tech Labs — KeffStation. On kiffe la tech. La tech kiffe la vie.</p>
+  </div>
+</footer>
+
+<!-- ===================== BOTTOM NAV ===================== -->
+<nav class="bottom-nav">
+  <button id="nav-boutique" class="active"><span class="icone">🛒</span>Boutique</button>
+  <button id="nav-troc"><span class="icone">🔄</span>Troc & Services</button>
+</nav>
+
+<script>
+/* ============================================================
+   1) TRADUCTIONS UI (statique) — reste identique au système existant
+   ============================================================ */
+const traductions = {
+  fr:{ titre_accueil:"La valeur est à la source.", description:"Pourquoi payer les intermédiaires ? Nos produits proviennent directement d'usine avec <strong>moins de 10% de commission</strong>. Évitez les centres commerciaux et profitez d'une expédition professionnelle, régulière et sans accrocs." },
+  en:{ titre_accueil:"Value starts at the source.", description:"Why pay middlemen? Our products come directly from the factory with <strong>less than 10% commission</strong>. Avoid malls and enjoy professional, regular, seamless shipping." },
+  es:{ titre_accueil:"El valor está en la fuente.", description:"¿Por qué pagar a intermediarios? Nuestros productos provienen directamente de fábrica con <strong>menos del 10% de comisión</strong>." },
+  de:{ titre_accueil:"Der Wert liegt an der Quelle.", description:"Warum Zwischenhändler bezahlen? Unsere Produkte kommen direkt ab Werk mit <strong>weniger als 10% Provision</strong>." },
+  it:{ titre_accueil:"Il valore è alla fonte.", description:"Perché pagare gli intermediari? I nostri prodotti provengono direttamente dalla fabbrica con <strong>meno del 10% di commissione</strong>." },
+  pt:{ titre_accueil:"O valor está na fonte.", description:"Por que pagar intermediários? Nossos produtos vêm diretamente da fábrica com <strong>menos de 10% de comissão</strong>." },
+  ru:{ titre_accueil:"Ценность у истоков.", description:"Зачем платить посредникам? Наши товары поступают напрямую с завода с <strong>комиссией менее 10%</strong>." },
+  zh:{ titre_accueil:"价值源于源头。", description:"为什么要向中间商付款？我们的产品直接来自工厂，<strong>佣金低于10%</strong>。" },
+  ja:{ titre_accueil:"価値は源泉にあり。", description:"なぜ仲介業者に支払うのですか？当社の製品は工場から直接届き、<strong>手数料は10％未満</strong>です。" },
+  ko:{ titre_accueil:"가치는 원천에 있습니다.", description:"왜 중개인에게 돈을 지불합니까? 당사의 제품은 <strong>10% 미만의 수수료</strong>로 공장에서 직접 제공됩니다." },
+  hi:{ titre_accueil:"मूल्य स्रोत पर है।", description:"बिचौलियों को भुगतान क्यों करें? हमारे उत्पाद सीधे कारखाने से <strong>10% से कम कमीशन</strong> के साथ आते हैं।" },
+  he:{ titre_accueil:"הערך נמצא במקור.", description:"למה לשלם למתווכים? המוצרים שלנו מגיעים ישירות מהמפעל עם <strong>פחות מ-10% עמלה</strong>." },
+  ar:{ titre_accueil:"القيمة في المصدر.", description:"لماذا تدفع للوسطاء؟ منتجاتنا تأتي مباشرة من المصنع بـ <strong>عمولة أقل من 10%</strong>." }
+};
+// NOTE : les fiches produits générées plus bas sont pour l'instant uniquement en français.
+// La traduction multilingue du catalogue complet (100+ produits) sera à brancher côté backend/CMS (ex: API de traduction),
+// ce serait trop volumineux à maintenir en dur dans un seul fichier HTML.
+
+function appliquerTraduction(langueComplete){
+  const langueBase = langueComplete.split('-')[0];
+  document.documentElement.lang = langueBase;
+  document.documentElement.setAttribute('dir', (langueBase==='he'||langueBase==='ar') ? 'rtl':'ltr');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.classList.add('fade-out');
+    setTimeout(()=>{
+      const cle = el.getAttribute('data-i18n');
+      if(traductions[langueBase] && traductions[langueBase][cle]) el.innerHTML = traductions[langueBase][cle];
+      el.classList.remove('fade-out');
+    },300);
+  });
+}
+
+/* ============================================================
+   2) DEVISES
+   ============================================================ */
+function appliquerDevise(selectEl){
+  const opt = selectEl.options[selectEl.selectedIndex];
+  const taux = parseFloat(opt.getAttribute('data-taux'));
+  const symbole = opt.getAttribute('data-symbole');
+  document.querySelectorAll('.prix-produit').forEach(el=>{
+    const eur = parseFloat(el.getAttribute('data-eur'));
+    const val = (eur*taux);
+    const affichage = val>=100 ? Math.round(val) : val.toFixed(2);
+    // on préserve les span internes (ex: "/ mois") s'il y en a
+    const span = el.querySelector('span');
+    el.childNodes[0].nodeValue ? el.childNodes[0].nodeValue = affichage+symbole+' ' : null;
+    if(!span){ el.textContent = affichage+symbole; }
+    else { el.firstChild.textContent = affichage+symbole+' '; }
+  });
+}
+
+/* ============================================================
+   3) CATALOGUE — génération dynamique
+   ============================================================ */
+const SPEC_LABELS = ["Caractéristique clé 1","Caractéristique clé 2","Caractéristique clé 3","Garantie & SAV"];
+
+function genererProduitHTML(nom, marque, annee, prixEUR, emoji){
+  const def = `Le ${nom} de ${marque} (${annee}) fait partie de la nouvelle génération de produits tech, pensé pour un usage moderne et connecté. Sorti entre 2020 et 2026, il illustre les dernières avancées de la marque sur ce segment.`;
+  const carac = `
+    <li>${SPEC_LABELS[0]} : haut de gamme ${annee}</li>
+    <li>${SPEC_LABELS[1]} : compatible écosystème ${marque}</li>
+    <li>${SPEC_LABELS[2]} : autonomie / performance optimisées</li>
+    <li>${SPEC_LABELS[3]} : garantie constructeur incluse</li>`;
+  return `
+  <div class="produit-card">
+    <div class="produit-visuel">${emoji}</div>
+    <div class="produit-corps">
+      <span class="badge-annee">${annee}</span>
+      <h3>${nom}</h3>
+      <div class="produit-marque">Marque : ${marque}</div>
+      <div class="produit-def"><strong>Définition :</strong> ${def}</div>
+      <div class="produit-carac"><strong>Caractéristiques (indicatif) :</strong><ul>${carac}</ul></div>
+      <div class="produit-prix prix-produit" data-eur="${prixEUR}">${prixEUR}€</div>
+    </div>
+  </div>`;
+}
+
+function genererGrille(produits, emoji){
+  return `<div class="rayon-grid-articles">${produits.map(p=>genererProduitHTML(p[0],p[1],p[2],p[3],emoji)).join('')}</div>`;
+}
+
+const RAYONS = [
+{ id:"smart-immobilier", emoji:"🏠", titre:"Smart Immobilier", desc:"Domotique et sécurité connectée pour la maison.",
+  produits:[["Nuki Smart Lock 5","Nuki",2024,229],["Ring Video Doorbell Pro 2","Ring",2023,269],["Nest Learning Thermostat 4","Google",2023,279],["Fibaro Flood Sensor 2","Fibaro",2022,59],["Somfy TaHoma Switch","Somfy",2022,149],["Ubiquiti G4 Doorbell Pro","Ubiquiti",2023,399],["Tesla Solar Roof Kit","Tesla",2024,15000],["Aqara Smart Home Hub M3","Aqara",2024,79],["Ecojoko Box Énergie","Ecojoko",2023,149],["Somfy Volet Connecté io","Somfy",2022,199]] },
+{ id:"smartphones-computers", emoji:"📱", titre:"Smartphones & Computers", desc:"Les derniers flagships et machines des plus grandes marques.",
+  produits:[["iPhone 16 Pro","Apple",2024,1229],["Samsung Galaxy S25 Ultra","Samsung",2025,1469],["Google Pixel 9 Pro","Google",2024,1099],["MacBook Pro M4","Apple",2024,1999],["Microsoft Surface Laptop 7","Microsoft",2024,1299],["Dell XPS 14","Dell",2024,1799],["Sony Xperia 1 VI","Sony",2024,1399],["ASUS ROG Phone 9","ASUS",2024,1199],["Lenovo ThinkPad X1 Carbon Gen 12","Lenovo",2024,1899],["OnePlus 13","OnePlus",2025,899]] },
+{ id:"gadgets-accessoires", emoji:"⌚", titre:"Gadgets & Accessoires", desc:"Wearables et accessoires dernier cri.",
+  produits:[["Apple Watch Ultra 2","Apple",2023,899],["Samsung Galaxy Watch 7","Samsung",2024,319],["AirPods Pro 3","Apple",2025,249],["Sony WH-1000XM6","Sony",2025,399],["DJI Osmo Pocket 3","DJI",2023,519],["Ray-Ban Meta Smart Glasses","Meta",2023,329],["Garmin Fenix 8","Garmin",2024,999],["Oura Ring 4","Oura",2024,349],["Anker MagGo Powerbank","Anker",2023,79],["Xiaomi Smart Band 9","Xiaomi",2024,49]] },
+{ id:"consoles-videogames", emoji:"🎮", titre:"Consoles & Vidéogames", desc:"Gaming nouvelle génération, portable et salon.",
+  produits:[["Nintendo Switch 2","Nintendo",2025,449],["PlayStation 5 Pro","Sony",2024,799],["Xbox Series X","Microsoft",2020,499],["Steam Deck OLED","Valve",2023,569],["ASUS ROG Ally X","ASUS",2024,799],["Meta Quest 3","Meta",2023,549],["PlayStation VR2","Sony",2023,599],["Nintendo Switch OLED","Nintendo",2021,349],["Logitech G Pro X Superlight 2","Logitech",2023,159],["Razer Kishi V2","Razer",2022,99]] },
+{ id:"robots-compagnie", emoji:"🤖", titre:"Robots Compagnie & Ménager", desc:"Robots domestiques et compagnons connectés.",
+  produits:[["iRobot Roomba Combo 10","iRobot",2024,1399],["Samsung Ballie","Samsung",2024,999],["Amazon Astro","Amazon",2021,1599],["Ecovacs Deebot X2 Omni","Ecovacs",2023,1099],["Xiaomi CyberDog 2","Xiaomi",2023,1599],["Unitree Go2","Unitree",2023,1599],["Sony Aibo ERS-1000","Sony",2020,2900],["LG CLOi Home Hub","LG",2023,899],["Anki Vector 2.0","Digital Dream Labs",2021,299],["Tesla Optimus Gen 2","Tesla",2024,20000]] },
+{ id:"smart-electromenager", emoji:"⚡", titre:"Smart Électroménager", desc:"Électroménager connecté et intelligent.",
+  produits:[["Samsung Bespoke AI Fridge","Samsung",2024,2999],["LG InstaView Door-in-Door","LG",2023,2599],["Dyson V15s Detect Submarine","Dyson",2023,749],["iRobot Braava Jet M6","iRobot",2021,449],["Ninja Foodi Smart XL","Ninja",2022,299],["Xiaomi Smart Air Fryer Pro","Xiaomi",2023,99],["Bosch Home Connect Oven","Bosch",2023,1199],["Philips Hue Bridge + Kit","Philips",2023,199],["Ecobee Smart Thermostat Premium","Ecobee",2022,249],["Whirlpool Smart Oven+","Whirlpool",2022,899]] },
+{ id:"biotech-handicap", emoji:"♿️", titre:"Biotech Handicap", desc:"Technologies d'assistance et biotech accessibilité.",
+  produits:[["Ekso Bionics Exosquelette EksoNR","Ekso Bionics",2022,140000],["Ottobock Prothèse Bionique Genium X4","Ottobock",2023,60000],["Starkey Genesis AI","Starkey",2023,2999],["WHILL Model F2 Fauteuil électrique","WHILL",2022,3499],["WeWALK Smart Cane 2","WeWALK",2023,599],["Cochlear Nucleus 8","Cochlear",2022,9000],["OrCam MyEye Pro","OrCam",2023,4250],["HaptX Gloves G1","HaptX",2022,5495],["Bioservo Ironhand","Bioservo",2023,6900],["Medline Lit Médical Connecté","Medline",2022,3200]] },
+{ id:"robots-culture", emoji:"🌱", titre:"Robots Culture (Int/Ext)", desc:"Robotique agricole et jardinage connecté.",
+  produits:[["Husqvarna Automower 450X","Husqvarna",2023,2599],["FarmBot Genesis XL","FarmBot",2021,3985],["DJI Agras T50","DJI",2023,16999],["Ecovacs Goat A3000","Ecovacs",2024,2999],["Robomow RX50","Robomow",2022,999],["Netatmo Capteur Sol Connecté","Netatmo",2022,89],["Click and Grow Farm 8","Click and Grow",2022,499],["Naïo Technologies Oz","Naïo",2021,24900],["LG tiiun Mini Potager","LG",2023,899],["Gardena Smart Irrigation Control","Gardena",2022,129]] },
+{ id:"box-amenager", emoji:"📦", titre:"Box Aménager", desc:"Box domotique, réseau, énergie et sécurité.",
+  produits:[["Somfy TaHoma Switch v2","Somfy",2023,159],["Samsung SmartThings Hub","Samsung",2021,79],["Freebox Ultra","Free",2024,479],["Apple TV 4K (3e gen)","Apple",2022,169],["Nvidia Shield TV Pro","Nvidia",2022,199],["Google Nest Hub Max","Google",2021,229],["Ring Alarm Pro 2nd Gen","Ring",2023,279],["Linky+ Ecojoko Box","Ecojoko",2023,149],["Sonos Amp Gen 2","Sonos",2023,749],["Synology DS224+","Synology",2023,299]] },
+{ id:"vehicules-electriques", emoji:"🚗", titre:"Véhicules Ind. Électriques", desc:"Mobilité électrique individuelle nouvelle génération.",
+  produits:[["Xiaomi Electric Scooter 5 Pro","Xiaomi",2023,599],["Cowboy 4","Cowboy",2022,2790],["Kingsong S22 Eagle","Kingsong",2023,3299],["Segway Ninebot S-Pro","Segway",2021,699],["Citroën Ami","Citroën",2022,7990],["NIU MQi GT Evo","NIU",2022,3999],["Boosted Rev","Boosted",2020,1599],["Tern GSD S10 Cargo","Tern",2023,4999],["Segway Ninebot Gokart Pro","Segway",2021,1099],["Kaabo Wolf King GT Pro","Kaabo",2023,3599]] }
+];
+
+const ADULTE = {
+  id:"rayon-adulte", emoji:"🔞", titre:"Zone Adulte +18 / +21", desc:"Accès réservé aux adultes — vérification d'âge requise au paiement.",
+  tabs:[
+    { id:"commun", emoji:"🚬", nom:"Commun", produits:[
+      ["Vuse ePod 2 (e-cigarette)","Vuse",2023,29],
+      ["Storz & Bickel Volcano Hybrid (vaporisateur)","Storz & Bickel",2022,749],
+      ["PAX Plus Vaporisateur","PAX",2023,219],
+      ["Briquet Plasma Arc USB-C","TechArc",2023,24],
+      ["Laser Pointeur Classe 2 Pro","LaserTech",2022,39],
+      ["Alarme Personnelle Électronique 130dB","SafeGuard",2023,19],
+      ["Lampe Torche Tactique LED Défense","Fenix",2022,49],
+      ["Spray Autodéfense Légal (gel poivre)","GuardPro",2023,15],
+      ["Détecteur de Métaux Personnel","ScanSafe",2022,59],
+      ["Caméra Corporelle Autodéfense","BodyCam Pro",2023,89]
+    ]},
+    { id:"geek", emoji:"🎭", nom:"Geek Cosplay & Déco", retro:true, produits:[
+      ["Sabre Laser Réplique RGB Sonore","SaberForge",2023,189],
+      ["Armure Cosplay LED Modulaire","CosTech",2022,349],
+      ["Perruque Cosplay Fibre Premium","WigLab",2023,39],
+      ["Lentilles Cosplay LED Connectées","OptiCos",2023,59],
+      ["Masque Cyberpunk LED RGB","NeoMask",2024,79],
+      ["Gant Cosplay Lumineux Interactif","GlowGear",2023,49],
+      ["Ailes Cosplay Motorisées","WingTech",2022,229],
+      ["Casque Cosplay Sonorisé Bluetooth","HelmSound",2023,159],
+      ["Cape LED Programmable","CapeGlow",2023,99],
+      ["Kit Maquillage Cosplay UV Réactif","GlowFX",2022,29]
+    ]},
+    { id:"nerd", emoji:"🔬", nom:"Nerd Ingé", produits:[
+      ["Kit Robotique Arduino Mega Pro","Arduino",2023,89],
+      ["Imprimante 3D Résine Anycubic Photon","Anycubic",2023,299],
+      ["Kit Raspberry Pi 5 Complet","Raspberry Pi",2024,119],
+      ["Oscilloscope Portable Numérique","Hantek",2023,199],
+      ["Fer à Souder Connecté Pinecil V2","Pine64",2023,29],
+      ["Kit Drone FPV Ingénieur","BetaFPV",2023,349],
+      ["Kit Moteur Brushless Ingénierie","T-Motor",2022,49],
+      ["Multimètre Connecté Bluetooth","Fluke",2022,199],
+      ["Kit Capteurs IoT Complet","SparkFun",2023,79],
+      ["Fraiseuse PCB de Bureau CNC","Bantam Tools",2022,3499]
+    ]}
+  ]
+};
+
+const SOFT_HARD = {
+  id:"software-hardware", emoji:"💻", titre:"Software & Hardware (par pièce)", desc:"Logiciels et composants informatiques à l'unité.",
+  tabs:[
+    { id:"software", emoji:"💿", nom:"Software", produits:[
+      ["Windows 11 Pro (licence)","Microsoft",2024,199],
+      ["macOS Sequoia (mise à niveau matériel requis)","Apple",2024,0],
+      ["Ubuntu Linux 24.04 LTS (support pro)","Canonical",2024,0],
+      ["Adobe Creative Cloud (1 an)","Adobe",2024,659],
+      ["Office 365 Famille","Microsoft",2024,99],
+      ["Antivirus Bitdefender Total Security","Bitdefender",2024,49],
+      ["VPN NordVPN (2 ans)","NordVPN",2024,79],
+      ["Unity Pro (licence annuelle)","Unity",2023,2040],
+      ["AutoCAD (licence annuelle)","Autodesk",2024,2470],
+      ["Windows Server 2025","Microsoft",2025,1069]
+    ]},
+    { id:"hardware", emoji:"🔩", nom:"Hardware (pièces)", produits:[
+      ["Intel Core Ultra 9 285K","Intel",2024,589],
+      ["Nvidia GeForce RTX 5090","Nvidia",2025,1999],
+      ["Corsair Vengeance DDR5 32Go","Corsair",2023,119],
+      ["Samsung 990 Pro SSD NVMe 2To","Samsung",2023,169],
+      ["ASUS ROG Maximus Z890 Hero","ASUS",2024,699],
+      ["Corsair RM1000x Alimentation","Corsair",2022,189],
+      ["NZXT H9 Flow Boîtier PC","NZXT",2023,159],
+      ["Corsair iCUE Link Watercooling","Corsair",2023,279],
+      ["Creative Sound Blaster AE-9","Creative",2021,299],
+      ["ASUS PCE-BE92BT WiFi 7","ASUS",2024,129]
+    ]}
+  ]
+};
+
+/* ============================================================
+   4) RENDU DU CATALOGUE
+   ============================================================ */
+function initSommaireEtRayons(){
+  const sommaireTags = document.getElementById('sommaire-tags');
+  const dropdown = document.getElementById('catalog-dropdown');
+  const container = document.getElementById('rayons-container');
+  let html = '';
+
+  const tousRayons = [...RAYONS];
+
+  tousRayons.forEach(r=>{
+    sommaireTags.innerHTML += `<a class="sommaire-tag" href="#${r.id}">${r.emoji} ${r.titre}</a>`;
+    dropdown.innerHTML += `<li><a href="#${r.id}">${r.emoji} ${r.titre}</a></li>`;
+    html += `
+    <section class="rayon-section" id="${r.id}">
+      <div class="rayon-header"><div><h2>${r.emoji} ${r.titre}</h2><p>${r.desc}</p></div></div>
+      ${genererGrille(r.produits, r.emoji)}
+    </section>`;
+  });
+
+  // Rayon Adulte avec 3 onglets
+  sommaireTags.innerHTML += `<a class="sommaire-tag" href="#${ADULTE.id}">${ADULTE.emoji} ${ADULTE.titre}</a>`;
+  dropdown.innerHTML += `<li><a href="#${ADULTE.id}">${ADULTE.emoji} ${ADULTE.titre}</a></li>`;
+  html += `
+  <section class="rayon-section" id="${ADULTE.id}">
+    <div class="rayon-header"><div><h2>${ADULTE.emoji} ${ADULTE.titre}</h2><p>${ADULTE.desc}</p></div></div>
+    <div class="rayon-onglets">
+      ${ADULTE.tabs.map((t,i)=>`<button class="onglet-btn ${i===0?'active':''}" data-target="onglet-${ADULTE.id}-${t.id}">${t.emoji} ${t.nom}</button>`).join('')}
+    </div>
+    ${ADULTE.tabs.map((t,i)=>`
+      <div class="onglet-panneau ${i===0?'active':''}" id="onglet-${ADULTE.id}-${t.id}">
+        ${t.retro ? `<div class="retro-toggle"><span>Mode affichage :</span><button class="retro-switch-btn" data-scope="onglet-${ADULTE.id}-${t.id}">🕹️ Basculer Rétro / Moderne</button></div>` : ''}
+        ${genererGrille(t.produits, t.emoji)}
+      </div>`).join('')}
+  </section>`;
+
+  // Rayon Software & Hardware avec 2 sous-onglets
+  sommaireTags.innerHTML += `<a class="sommaire-tag" href="#${SOFT_HARD.id}">${SOFT_HARD.emoji} ${SOFT_HARD.titre}</a>`;
+  dropdown.innerHTML += `<li><a href="#${SOFT_HARD.id}">${SOFT_HARD.emoji} ${SOFT_HARD.titre}</a></li>`;
+  html += `
+  <section class="rayon-section" id="${SOFT_HARD.id}">
+    <div class="rayon-header"><div><h2>${SOFT_HARD.emoji} ${SOFT_HARD.titre}</h2><p>${SOFT_HARD.desc}</p></div></div>
+    <div class="rayon-onglets">
+      ${SOFT_HARD.tabs.map((t,i)=>`<button class="onglet-btn ${i===0?'active':''}" data-target="onglet-${SOFT_HARD.id}-${t.id}">${t.emoji} ${t.nom}</button>`).join('')}
+    </div>
+    ${SOFT_HARD.tabs.map((t,i)=>`
+      <div class="onglet-panneau ${i===0?'active':''}" id="onglet-${SOFT_HARD.id}-${t.id}">
+        ${genererGrille(t.produits, t.emoji)}
+      </div>`).join('')}
+  </section>`;
+
+  container.innerHTML = html;
+
+  // gestion des onglets (délégation)
+  document.querySelectorAll('.rayon-onglets').forEach(group=>{
+    group.querySelectorAll('.onglet-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        group.querySelectorAll('.onglet-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const parentSection = group.closest('.rayon-section');
+        parentSection.querySelectorAll('.onglet-panneau').forEach(p=>p.classList.remove('active'));
+        document.getElementById(btn.getAttribute('data-target')).classList.add('active');
+      });
+    });
+  });
+
+  // gestion rétro/moderne
+  document.querySelectorAll('.retro-switch-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.getElementById(btn.getAttribute('data-scope')).classList.toggle('retro-mode-on');
+    });
+  });
+
+  // applique la devise par défaut sur les nouveaux prix générés
+  appliquerDevise(document.getElementById('devise-switch'));
+}
+
+/* ============================================================
+   5) TROC & SERVICES — logique
+   ============================================================ */
+const SERVICES_DEFAUT = {
+  "💻 Informatique":[
+    ["Créer un site web vitrine","Service basique, min. 10€, étapes courtes ensuite"],
+    ["Dépannage informatique à distance","1€/étape courte, min. 10€"],
+    ["Installation & config réseau Wi-Fi","5€/étape longue"],
+    ["Nettoyage & optimisation PC","Service basique, min. 10€"],
+    ["Création d'une identité visuelle simple","5€/étape longue"]
+  ],
+  "🤝 Régulier":[
+    ["Promener un chien","1€/étape courte, min. 10€"],
+    ["Donner à manger au poisson rouge","1€/étape courte"],
+    ["Vider l'eau de la piscine","5€/étape longue"],
+    ["Être un bon ami / une connaissance","100€ les 25h (forfait régulier)"],
+    ["Arroser les plantes en votre absence","1€/étape courte, min. 10€"]
+  ],
+  "🏢 Entreprise, Société & Organisation":[
+    ["Aide à la création de statuts","5€/étape longue"],
+    ["Organisation d'un événement d'entreprise","Service basique, min. 10€, puis étapes longues"],
+    ["Gestion de standard téléphonique ponctuelle","1€/étape courte, min. 10€"],
+    ["Relecture de documents professionnels","1€/étape courte"],
+    ["Accompagnement administratif","5€/étape longue"]
+  ],
+  "🔁 Prêts sous conditions (à rendre à l'identique)":[
+    ["Prêt d'argent entre particuliers","Valeur libre, à rendre tel que prêté"],
+    ["Prêt de matériel de bricolage","Valeur libre, à rendre en l'état"],
+    ["Prêt de matériel photo/vidéo","Valeur libre, à rendre en l'état"],
+    ["Prêt d'un véhicule utilitaire","Valeur libre, à rendre en l'état"],
+    ["Prêt de mobilier événementiel","Valeur libre, à rendre en l'état"]
+  ]
+};
+
+function initServicesDefaut(){
+  const container = document.getElementById('services-defaut-container');
+  let html = '';
+  Object.keys(SERVICES_DEFAUT).forEach(genre=>{
+    html += `<div class="genre-titre">${genre}</div><div class="services-defaut">`;
+    SERVICES_DEFAUT[genre].forEach(s=>{
+      html += `<div class="service-card"><h4>${s[0]}</h4><p>${s[1]}</p></div>`;
+    });
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  initSommaireEtRayons();
+  initServicesDefaut();
+
+  // langue
+  const menuLangue = document.getElementById("lang-switch");
+  if(menuLangue) menuLangue.addEventListener("change", e=>appliquerTraduction(e.target.value));
+
+  // theme
+  const menuTheme = document.getElementById("theme-switch");
+  if(menuTheme) menuTheme.addEventListener("change", e=>document.documentElement.setAttribute('data-theme', e.target.value));
+
+  // devise
+  const menuDevise = document.getElementById("devise-switch");
+  if(menuDevise) menuDevise.addEventListener("change", e=>appliquerDevise(e.target));
+
+  // menu catalogue flottant
+  const catalogToggle = document.getElementById('catalog-toggle');
+  const catalogDropdown = document.getElementById('catalog-dropdown');
+  if(catalogToggle) catalogToggle.addEventListener('click', ()=>catalogDropdown.classList.toggle('active'));
+  document.addEventListener('click', e=>{
+    if(catalogDropdown && !catalogDropdown.contains(e.target) && e.target!==catalogToggle) catalogDropdown.classList.remove('active');
+  });
+
+  // bottom nav : Boutique / Troc & Services
+  const navBoutique = document.getElementById('nav-boutique');
+  const navTroc = document.getElementById('nav-troc');
+  const vueBoutique = document.getElementById('vue-boutique');
+  const vueTroc = document.getElementById('vue-troc');
+  navBoutique.addEventListener('click', ()=>{
+    navBoutique.classList.add('active'); navTroc.classList.remove('active');
+    vueBoutique.classList.remove('hidden'); vueTroc.classList.remove('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  navTroc.addEventListener('click', ()=>{
+    navTroc.classList.add('active'); navBoutique.classList.remove('active');
+    vueBoutique.classList.add('hidden'); vueTroc.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // Maker Blog Page : générateur d'annonce + calcul de prix
+  document.getElementById('mf-generer').addEventListener('click', ()=>{
+    const nom = document.getElementById('mf-nom').value || "Ma boutique";
+    const statut = document.getElementById('mf-statut').value;
+    const type = document.getElementById('mf-type').value;
+    const titre = document.getElementById('mf-titre').value || "Article / service sans titre";
+    const description = document.getElementById('mf-description').value || "";
+    const etape = document.getElementById('mf-etape').value;
+    const nbEtapes = parseInt(document.getElementById('mf-nb-etapes').value)||1;
+    const basique = document.getElementById('mf-basique').value === 'oui';
+    const valeurLibre = document.getElementById('mf-valeur-libre').value;
+
+    let prixTexte = "";
+    if(etape === 'libre'){
+      prixTexte = "Valeur libre : " + (valeurLibre || "à négocier avec l'échangeur");
+    } else {
+      let prix = etape==='courte' ? nbEtapes*1 : nbEtapes*5;
+      if(basique) prix = Math.max(prix, 10);
+      prixTexte = prix.toFixed(2) + "€";
+    }
+
+    document.getElementById('resultat-prix').innerHTML =
+      `Prix calculé pour "<strong>${titre}</strong>" : <strong>${prixTexte}</strong>`;
+
+    const annonce = document.createElement('div');
+    annonce.className = 'annonce-card';
+    annonce.innerHTML = `
+      <h4>${nom} — ${statut}</h4>
+      <p><strong>${titre}</strong> (${type === 'objet' ? 'Objet' : 'Service'})</p>
+      <p>${description}</p>
+      <p>💰 ${prixTexte}</p>`;
+    document.getElementById('liste-annonces').prepend(annonce);
+  });
+});
+</script>
 </body>
 </html>
